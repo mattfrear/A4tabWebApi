@@ -1,0 +1,14 @@
+/tabs
+Returns: { [ { ID: 1, Name: "Blur - Song 2" }, ... ] }
+
+/tabs/1
+Returns: { ID: 1, Name: "Blur - Song 2", Books: { ID: 5, Name: "Singalongs" }, Content: "tab content here" } 
+
+/tabs/recent
+/tabs/count
+
+/artists
+/artists/2
+
+/books
+/books/5
