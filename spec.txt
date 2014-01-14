@@ -2,7 +2,7 @@ GET /tabs
 Returns: [ 1, 3, 4, ... ]
 
 GET, PUT /tabs/1
-Returns: { Id: 1, AuthorName: "Matt Frear", CreatedOn: "2014-01-23", Artist: "Blur",  Name: "Song 2", Content: "tab content here" } 
+Returns: { Id: 1, AuthorName: "Matt Frear", CreatedOn: "2014-01-23", Artist: 2, ArtistName: "Blur",  Name: "Song 2", Content: "tab content here" } 
 
 GET /tabs/recent
 Returns: [ 1, 3, 4 ] (10 most recent)
