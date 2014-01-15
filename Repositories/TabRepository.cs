@@ -8,6 +8,8 @@ namespace Repositories
 {
     public class TabRepository : IRepository<Tab>
     {
+        // todo, configure Dapper and SQL Server Express
+
         public Tab GetById(int id)
         {
             throw new NotImplementedException();
