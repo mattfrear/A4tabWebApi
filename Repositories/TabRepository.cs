@@ -6,7 +6,7 @@ using Repositories.Contracts;
 
 namespace Repositories
 {
-    public class TabRepository : ITabRepository
+    public class TabRepository : IRepository<Tab>
     {
         public Tab GetById(int id)
         {
@@ -33,7 +33,7 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        IQueryable<Tab> IRepository<Tab>.GetAll()
+        public IQueryable<Tab> GetAll()
         {
             throw new NotImplementedException();
         }

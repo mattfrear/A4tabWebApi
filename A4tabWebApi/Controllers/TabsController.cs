@@ -10,7 +10,7 @@ namespace A4tabWebApi.Controllers
     {
         private readonly IRepository<Tab> tabsRepository;
 
-        public TabsController(ITabRepository tabsRepository)
+        public TabsController(IRepository<Tab> tabsRepository)
         {
             this.tabsRepository = tabsRepository;
         }

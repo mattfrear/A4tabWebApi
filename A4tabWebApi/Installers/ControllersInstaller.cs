@@ -11,7 +11,6 @@ namespace A4tabWebApi.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleTransient());
-            container.Register(Classes.FromThisAssembly().BasedOn<IController>().LifestyleTransient());
         }
     }
 }
