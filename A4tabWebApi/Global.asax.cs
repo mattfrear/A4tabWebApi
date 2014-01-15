@@ -1,8 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using A4tabWebApi.Plumbing;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 
@@ -14,7 +16,8 @@ namespace A4tabWebApi
 
         private static void BootstrapContainer()
         {
-            container = new WindsorContainer().Install(FromAssembly.This());
+            container = new WindsorContainer().Install(FromAssembly.InDirectory(new AssemblyFilter(HttpRuntime.BinDirectory, "Repositories.dll")));
+            container.Install(FromAssembly.This());
             var controllerFactory = new WindsorControllerFactory(container.Kernel);
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
         }

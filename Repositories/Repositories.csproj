@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IRepository.cs" />
+    <Compile Include="Contracts\ITabRepository.cs" />
     <Compile Include="Installers\RepositoriesInstaller.cs" />
     <Compile Include="TabRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

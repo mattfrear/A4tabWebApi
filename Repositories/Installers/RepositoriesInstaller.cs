@@ -10,8 +10,8 @@ namespace Repositories.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Classes.FromThisAssembly()
-                .BasedOn<IRepository<TabRepository>>()
-                .WithService.DefaultInterfaces()
+                .Where(type => !type.Namespace.Contains("Contracts") && type.Name.EndsWith("Repository"))
+                .WithService.FirstInterface()
                 .LifestyleTransient());
         }
     }

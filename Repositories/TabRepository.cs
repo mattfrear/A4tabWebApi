@@ -6,7 +6,7 @@ using Repositories.Contracts;
 
 namespace Repositories
 {
-    public class TabRepository : IRepository<Tab>
+    public class TabRepository : ITabRepository
     {
         public Tab GetById(int id)
         {
