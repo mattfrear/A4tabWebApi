@@ -1,35 +1,52 @@
-GET /tabs
+GET api/v1/tabs
 Returns: [ 1, 3, 4, ... ]
 
-GET, PUT /tabs/1
-Returns: { Id: 1, AuthorName: "Matt Frear", CreatedOn: "2014-01-23", Artist: 2, ArtistName: "Blur",  Name: "Song 2", Content: "tab content here" } 
+GET api/v1/tabs?offset=10&limit=10
 
-GET /tabs/recent
+POST api/v1/tabs
+Body: { authorName: "Matt Frear", artistName: "Blur",  name: "Song 2", content: "tab content here" } 
+
+GET, PUT api/v1/tabs/1
+Returns: { id: 1, authorName: "Matt Frear", createdOn: "2014-01-23", modifiedOn: "2014-01-23", artistId: 2, artistName: "Blur",  name: "Song 2", content: "tab content here" } 
+
+GET api/v1/tabs?name=Song 2
+Returns: { id: 1, authorName: "Matt Frear", createdOn: "2014-01-23", modifiedOn: "2014-01-23", artistId: 2, artistName: "Blur",  name: "Song 2", content: "tab content here" } 
+
+GET api/v1/tabs?fields=id,name
+Returns: [ { id:1, name:"Song 2" }, { id: 2, name:"Ain't no Sunshine" } ... ]
+
+GET api/v1/tabs?fields=id,name,artists(name)
+Returns: [ { id:1, name:"Song 2", artist.name:"Blur" }, { id: 2, name:"Ain't no Sunshine", artist.name:"Bill Withers" } ... ]
+
+GET api/v1/tabs/recent
 Returns: [ 1, 3, 4 ] (10 most recent)
 
-GET /tabs/count
+GET api/v1/tabs/count
 Returns: { 50 }
 
-GET /artists
+GET api/v1/artists
 Returns: [2, 4, ...]
 
-GET /artists/2
-Returns: { [ { Id: 2, Artist: "Blur" } ... ] }
+GET api/v1/artists/2
+Returns: { [ { id: 2, name: "Blur" } ... ] }
 
-GET /artists/2/tabs
+GET api/v1/artists/2/tabs
 Returns: [ 1, 3, 4]
 
-GET /books
+GET api/v1/books
 Returns: { [5,6,7] }
 
-GET /books/5
-Returns: { [ { Id: 5, Name: "Singalongs" } ...] }
+GET api/v1/books/5
+Returns: { [ { id: 5, name: "Singalongs", createdOn: "2014-01-23", modifiedOn: "2014-01-23" } ...] }
 
-GET /books/5/tabs
+GET api/v1/books/5/tabs
 { [5, 6, 7] }
 
-POST /books/5/tabs - add a tab to a book
+POST api/v1/books/5/tabs - add a tab to a book
 { 8 }
 
-DELETE /books/5/tabs/ - delete a tab from a book
+DELETE api/v1/books/5/tabs/ - delete a tab from a book
 { 8 }
+
+GET
+api/vi/search?q=foo+fighters
