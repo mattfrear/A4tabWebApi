@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq.Expressions;
+using Dapper;
 using Domain;
 using Repositories.Contracts;
 
@@ -8,7 +10,12 @@ namespace Repositories
 {
     public class TabRepository : IRepository<Tab>
     {
-        // todo, configure Dapper and SQL Server Express
+        private readonly SqlConnection connection;
+
+        public TabRepository(string connectionString)
+        {
+            connection = new SqlConnection(connectionString);
+        }
 
         public Tab GetById(int id)
         {
@@ -30,14 +37,15 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public IQueryable<Tab> SearchFor(Expression<Func<Tab, bool>> predicate)
+        public IEnumerable<Tab> SearchFor(Expression<Func<Tab, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Tab> GetAll()
+        public IEnumerable<Tab> GetAll()
         {
-            throw new NotImplementedException();
+            var tabs = connection.Query<Tab>("select Id from Tab");
+            return tabs;
         }
     }
 }

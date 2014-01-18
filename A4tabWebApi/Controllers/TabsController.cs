@@ -28,12 +28,12 @@ namespace A4tabWebApi.Controllers
         }
 
         // POST api/tabs
-        public void Post([FromBody]string value)
+        public void Post(Tab value)
         {
         }
 
         // PUT api/tabs/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(Tab value)
         {
         }
 

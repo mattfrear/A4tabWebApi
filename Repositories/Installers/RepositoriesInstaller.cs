@@ -1,7 +1,6 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Repositories.Contracts;
 
 namespace Repositories.Installers
 {
@@ -12,7 +11,8 @@ namespace Repositories.Installers
             container.Register(Classes.FromThisAssembly()
                 .Where(type => !type.Namespace.Contains("Contracts") && type.Name.EndsWith("Repository"))
                 .WithService.FirstInterface()
-                .LifestyleTransient());
+                .LifestyleTransient()
+                .Configure(x => x.DependsOn(Dependency.OnAppSettingsValue("connectionString", "connectionString"))));
         }
     }
 }
