@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using A4tabWebApi.Controllers;
+using A4tabWebApi.Mappers;
+using AutoMapper;
 using Domain;
 using Moq;
 using Repositories.Contracts;
@@ -20,26 +22,30 @@ namespace A4tabWebApi.UnitTests.Controllers
         {
             tabsRepository = new Mock<IRepository<Tab>>();
             controller = new TabsController(tabsRepository.Object);
+
+            Mapper.Initialize(x => x.AddProfile<DomainToViewModelProfile>());
         }
 
         public class Get : TabsControllerTests
         {
             [Test]
-            public void Should_Call_Repository_And_Return_List_Of_Tabs()
+            public void Should_Call_Repository_And_Return_List_Of_Tabs_With_Artist()
             {
                 // Arrange
-                var tabs = new List<Tab> { new Tab { Id = 1 }}.AsQueryable();
-                tabsRepository.Setup(x => x.GetAll()).Returns(tabs);
+                var tab = new Tab { Id = 1, Artist = new Artist { Name = "Bob" } };
+                var tabs = new List<Tab> { tab }.AsQueryable();
+                tabsRepository.Setup(x => x.GetAll(0, 10, "Tab.Id")).Returns(tabs);
 
                 // Act
-                var result = controller.Get();
+                var result = controller.Get().ToList();
                 
                 // Assert
+                tabsRepository.VerifyAll();
+
                 result.ShouldNotBeEmpty();
                 result.Count().ShouldEqual(1);
-                result.ToList()[0].ShouldEqual(1);
-                
-                tabsRepository.VerifyAll();
+                result[0].Id.ShouldEqual(1);
+                result[0].ArtistName.ShouldEqual("Bob");
             }
         }
     }

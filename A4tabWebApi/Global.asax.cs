@@ -35,6 +35,7 @@ namespace A4tabWebApi
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorCompositionRoot(this.container));
+            AutoMapperConfig.Configure();
         }
     }
 }
