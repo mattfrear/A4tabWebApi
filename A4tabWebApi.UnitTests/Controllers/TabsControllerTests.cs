@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http.Results;
 using A4tabWebApi.Controllers;
 using A4tabWebApi.Mappers;
+using A4tabWebApi.ViewModels;
 using AutoMapper;
 using Domain;
 using Moq;
@@ -29,6 +31,45 @@ namespace A4tabWebApi.UnitTests.Controllers
         public class Get : TabsControllerTests
         {
             [Test]
+            public void Should_Return_BadRequest_When_Invalid_Offset()
+            {
+                // Act
+                var result = controller.Get(offset: -1);
+
+                // Assert
+                result.ShouldBeType<BadRequestErrorMessageResult>();
+
+                var message = ((BadRequestErrorMessageResult) result).Message;
+                message.ShouldEqual("invalid parameter offset - must be greater than or equal to 0. ");
+            }
+
+            [Test]
+            public void Should_Return_BadRequest_When_Invalid_Limit()
+            {
+                // Act
+                var result = controller.Get(limit: -1);
+
+                // Assert
+                result.ShouldBeType<BadRequestErrorMessageResult>();
+
+                var message = ((BadRequestErrorMessageResult)result).Message;
+                message.ShouldEqual("invalid parameter limit - must be greater than 0 and less than or equal to 100. ");
+            }
+
+            [Test]
+            public void Should_Return_BadRequest_When_Invalid_Sort()
+            {
+                // Act
+                var result = controller.Get(sort: "Blah");
+
+                // Assert
+                result.ShouldBeType<BadRequestErrorMessageResult>();
+
+                var message = ((BadRequestErrorMessageResult)result).Message;
+                message.ShouldEqual("invalid parameter sort - must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name. ");
+            }
+
+            [Test]
             public void Should_Call_Repository_And_Return_List_Of_Tabs_With_Artist()
             {
                 // Arrange
@@ -37,15 +78,18 @@ namespace A4tabWebApi.UnitTests.Controllers
                 tabsRepository.Setup(x => x.GetAll(0, 10, "Tab.Id")).Returns(tabs);
 
                 // Act
-                var result = controller.Get().ToList();
+                var result = controller.Get();
                 
                 // Assert
                 tabsRepository.VerifyAll();
 
-                result.ShouldNotBeEmpty();
-                result.Count().ShouldEqual(1);
-                result[0].Id.ShouldEqual(1);
-                result[0].ArtistName.ShouldEqual("Bob");
+                result.ShouldBeType<OkNegotiatedContentResult<IEnumerable<TabViewModel>>>();
+
+                var content = ((OkNegotiatedContentResult<IEnumerable<TabViewModel>>)result).Content.ToList();
+                content.ShouldNotBeEmpty();
+                content.Count().ShouldEqual(1);
+                content[0].Id.ShouldEqual(1);
+                content[0].ArtistName.ShouldEqual("Bob");
             }
         }
     }

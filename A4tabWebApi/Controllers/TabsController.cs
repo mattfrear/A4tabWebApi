@@ -24,16 +24,22 @@ namespace A4tabWebApi.Controllers
         /// <param name="limit">Default: 10. Must be > 0 and &lt;= 100.</param>
         /// <param name="sort">Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns></returns>
-        public IEnumerable<TabViewModel> Get(int offset = 0, int limit = 10, string sort = "Tab.Id")
+        public IHttpActionResult Get(int offset = 0, int limit = 10, string sort = "Tab.Id")
         {
-            Contract.Requires(offset >= 0, "invalid parameter offset - must be greater than or equal to 0");
-            Contract.Requires(limit > 0 && limit <= 100, "invalid parameter limit - must be greater than 0 and less than or equal to 100");
-            Contract.Requires(sort == "Tab.Id" || sort == "Tab.Name" || sort == "Tab.CreatedOn" || sort == "Tab.ModifiedOn" || sort == "Artist.Name",
-                "invalid parameter sort - must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name");
-            
+            var validator = new ParameterValidator();
+            validator.Validate(offset >= 0, "offset", "invalid parameter offset - must be greater than or equal to 0. ");
+            validator.Validate(limit > 0 && limit <= 100, "limit", "invalid parameter limit - must be greater than 0 and less than or equal to 100. ");
+            validator.Validate(sort == "Tab.Id" || sort == "Tab.Name" || sort == "Tab.CreatedOn" || sort == "Tab.ModifiedOn" || sort == "Artist.Name",
+                "sort", "invalid parameter sort - must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name. ");
+
+            if (validator.HasErrors())
+            {
+                return BadRequest(validator.ToString());
+            }
+
             var tabs = tabsRepository.GetAll(offset, limit, sort);
             var results = Mapper.Map<IEnumerable<TabViewModel>>(tabs);
-            return results;
+            return Ok(results);
         }
 
         // GET api/tabs/5
