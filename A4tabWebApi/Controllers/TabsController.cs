@@ -24,6 +24,7 @@ namespace A4tabWebApi.Controllers
         /// <param name="limit">Default: 10. Must be > 0 and &lt;= 100.</param>
         /// <param name="sort">Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns></returns>
+        
         public IHttpActionResult Get(int offset = 0, int limit = 10, string sort = "Tab.Id")
         {
             var validator = new ParameterValidator();
