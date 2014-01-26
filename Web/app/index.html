@@ -1,20 +1,29 @@
 ﻿<!doctype html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>My HTML File</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/lib/angular/angular.js"></script>
+    <script src="app.js"></script>
 </head>
-    <body>
+    <body ng-app="a4tab">
 
 
         <div class="container">
 
-            <div>
+            <div ng-controller="RecentCtrl">
                 <h1>A4 tab</h1>
-                <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-                <p>Nothing here {{'yet' + '!'}}</p>
+                <p class="lead">Welcome! Blah blah welcome message.</p>
+                <h2>Recent tabs</h2>
+                <div>
+                    {{error}}
+                </div>
+                <ul>
+                    <li ng-repeat="tab in recentTabs">
+                        {{tab.ArtistName}} {{tab.Name}}
+                    </li>
+                </ul>
             </div>
 
         </div>
