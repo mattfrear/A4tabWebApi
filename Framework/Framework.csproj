@@ -39,10 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IParameterValidator.cs" />
     <Compile Include="ParameterError.cs" />
     <Compile Include="ParameterValidator.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebViewModels\WebViewModels.csproj">
+      <Project>{E58720F1-D2C0-4FF7-8E6F-62DED2739E30}</Project>
+      <Name>WebViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

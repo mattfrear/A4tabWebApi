@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Framework
 {
-    public class ParameterValidator
+    public abstract class ParameterValidator 
     {
         public List<ParameterError> Errors = new List<ParameterError>();
 

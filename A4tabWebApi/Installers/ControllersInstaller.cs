@@ -1,8 +1,9 @@
 ﻿using System.Web.Http;
-using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Framework.Contracts;
+using WebViewModels;
 
 namespace A4tabWebApi.Installers
 {
@@ -11,6 +12,7 @@ namespace A4tabWebApi.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleTransient());
+            container.Register(Classes.FromThisAssembly().BasedOn<IParameterValidator<TabQuery>>().LifestyleTransient());
         }
     }
 }
