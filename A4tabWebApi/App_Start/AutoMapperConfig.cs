@@ -1,4 +1,4 @@
-﻿using A4tabWebApi.Mappers;
+﻿using ApplicationServices.Mappers;
 using AutoMapper;
 
 namespace A4tabWebApi

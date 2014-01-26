@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace A4tabWebApi.ViewModels
+namespace WebViewModels
 {
     public class TabViewModel
     {

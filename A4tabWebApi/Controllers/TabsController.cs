@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-using A4tabWebApi.ViewModels;
+using ApplicationServices.Contracts;
 using AutoMapper;
 using Domain;
 using Framework;
@@ -10,11 +10,11 @@ namespace A4tabWebApi.Controllers
 {
     public class TabsController : ApiController
     {
-        private readonly IRepository<Tab> tabsRepository;
+        private readonly ITabApplicationService tabApplicationService;
 
-        public TabsController(IRepository<Tab> tabsRepository)
+        public TabsController(ITabApplicationService tabApplicationService)
         {
-            this.tabsRepository = tabsRepository;
+            this.tabApplicationService = tabApplicationService;
         }
 
         /// <summary>
@@ -38,9 +38,8 @@ namespace A4tabWebApi.Controllers
                 return BadRequest(validator.ToString());
             }
 
-            var tabs = tabsRepository.GetAll(offset, limit, sort);
-            var results = Mapper.Map<IEnumerable<TabViewModel>>(tabs);
-            return Ok(results);
+            var tabs = tabApplicationService.GetRecentTabs();
+            return Ok(tabs);
         }
 
         // GET api/tabs/5

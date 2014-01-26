@@ -1,8 +1,8 @@
-﻿using A4tabWebApi.ViewModels;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain;
+using WebViewModels;
 
-namespace A4tabWebApi.Mappers
+namespace ApplicationServices.Mappers
 {
     public class DomainToViewModelProfile : Profile
     {
