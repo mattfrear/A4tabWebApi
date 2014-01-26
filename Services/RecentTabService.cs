@@ -16,7 +16,7 @@ namespace Services
 
         public IEnumerable<Tab> GetRecentTabs()
         {
-            return tabRepository.GetAll(0, 10, "-DateCreated");
+            return tabRepository.GetAll(0, 10, "-CreatedOn");
         }
     }
 }

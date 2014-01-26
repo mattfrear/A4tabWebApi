@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 using ApplicationServices.Contracts;
-using AutoMapper;
 using Domain;
 using Framework;
-using Repositories.Contracts;
 
 namespace A4tabWebApi.Controllers
 {
+    [RoutePrefix("api/v1/tabs")]
     public class TabsController : ApiController
     {
         private readonly ITabApplicationService tabApplicationService;
@@ -24,7 +22,6 @@ namespace A4tabWebApi.Controllers
         /// <param name="limit">Default: 10. Must be > 0 and &lt;= 100.</param>
         /// <param name="sort">Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns></returns>
-        
         public IHttpActionResult Get(int offset = 0, int limit = 10, string sort = "Tab.Id")
         {
             var validator = new ParameterValidator();
@@ -38,6 +35,14 @@ namespace A4tabWebApi.Controllers
                 return BadRequest(validator.ToString());
             }
 
+            var tabs = tabApplicationService.GetRecentTabs();
+            return Ok(tabs);
+        }
+
+        [HttpGet]
+        [Route("recent")]
+        public IHttpActionResult Recent()
+        {
             var tabs = tabApplicationService.GetRecentTabs();
             return Ok(tabs);
         }

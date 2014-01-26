@@ -45,7 +45,15 @@ namespace Repositories
         public IEnumerable<Tab> GetAll(int offset = 0, int limit = 10, string sort = "Tab.Id")
         {
             connection.Open();
-            var sql = string.Format("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by {0} OFFSET {1} ROWS FETCH NEXT {2} ROWS ONLY", sort, offset, limit);
+            var sortOrder = "ASC";
+            
+            if (sort.StartsWith("-"))
+            {
+                sort = sort.Substring(1);
+                sortOrder = "DESC";
+            }
+
+            var sql = string.Format("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by {0} {1} OFFSET {2} ROWS FETCH NEXT {3} ROWS ONLY", sort, sortOrder, offset, limit);
             var tabs = connection.Query<Tab, Artist, Tab>(sql, (tab, artist) => { tab.Artist = artist; return tab; });
             connection.Close();
 
