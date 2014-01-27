@@ -1,4 +1,4 @@
-﻿namespace Framework
+﻿namespace Framework.Validators
 {
     public class ParameterError
     {

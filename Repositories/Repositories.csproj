@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Installers\RepositoriesInstaller.cs" />
+    <Compile Include="Contracts\ISqlGenerator.cs" />
+    <Compile Include="SqlGenerator.cs" />
     <Compile Include="TabRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +63,14 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{f5c5f25e-368d-46d0-aea1-d49f83e15a73}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{67F8AF7D-2C0A-4623-8912-C459B664BF7F}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Validators\Validators.csproj">
+      <Project>{f4241f20-3333-471e-b4b8-8b7ec9b31ada}</Project>
+      <Name>Validators</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

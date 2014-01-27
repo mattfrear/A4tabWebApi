@@ -4,16 +4,19 @@ using System.Data.SqlClient;
 using System.Linq.Expressions;
 using Dapper;
 using Domain;
+using Framework.Contracts;
 using Repositories.Contracts;
 
 namespace Repositories
 {
     public class TabRepository : IRepository<Tab>
     {
+        private readonly ISqlGenerator sqlGenerator;
         private readonly SqlConnection connection;
 
-        public TabRepository(string connectionString)
+        public TabRepository(string connectionString, ISqlGenerator sqlGenerator)
         {
+            this.sqlGenerator = sqlGenerator;
             connection = new SqlConnection(connectionString);
         }
 
@@ -42,18 +45,11 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Tab> GetAll(int offset = 0, int limit = 10, string sort = "Tab.Id")
+        public IEnumerable<Tab> GetAll(TabQuery tabQuery)
         {
-            connection.Open();
-            var sortOrder = "ASC";
-            
-            if (sort.StartsWith("-"))
-            {
-                sort = sort.Substring(1);
-                sortOrder = "DESC";
-            }
+            var sql = sqlGenerator.GenerateSql(tabQuery);
 
-            var sql = string.Format("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by {0} {1} OFFSET {2} ROWS FETCH NEXT {3} ROWS ONLY", sort, sortOrder, offset, limit);
+            connection.Open();
             var tabs = connection.Query<Tab, Artist, Tab>(sql, (tab, artist) => { tab.Artist = artist; return tab; });
             connection.Close();
 

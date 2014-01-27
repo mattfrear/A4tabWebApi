@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace Framework
+namespace Framework.Validators
 {
     public abstract class ParameterValidator 
     {

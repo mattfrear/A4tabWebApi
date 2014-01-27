@@ -1,10 +1,7 @@
 ﻿using System.Web.Http;
-using A4tabWebApi.Validators;
 using ApplicationServices.Contracts;
 using Domain;
-using Framework;
 using Framework.Contracts;
-using WebViewModels;
 
 namespace A4tabWebApi.Controllers
 {
@@ -23,9 +20,7 @@ namespace A4tabWebApi.Controllers
         /// <summary>
         /// Gets a list of Tabs
         /// </summary>
-        /// <param name="query.Offset">Default: 0. Must be >= 0</param>
-        /// <param name="query.Limit">Default: 10. Must be > 0 and &lt;= 100.</param>
-        /// <param name="query.Sort">Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
+        /// <param name="query">Offset: Default: 0. Must be &gt;= 0. Limit: Default: 10. Must be &gt; 0 and &lt;= 100. Sort: Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns>An array of TabViewModel</returns>
         public IHttpActionResult Get([FromUri]TabQuery query)
         {

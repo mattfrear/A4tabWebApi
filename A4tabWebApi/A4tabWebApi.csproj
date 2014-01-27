@@ -32,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -178,11 +179,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Installers\ValidatorsInstaller.cs" />
     <Compile Include="Installers\ControllersInstaller.cs" />
     <Compile Include="Plumbing\WindsorCompositionRoot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\TabQueryValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
@@ -265,6 +264,10 @@
     <ProjectReference Include="..\Repositories\Repositories.csproj">
       <Project>{52C53396-AE4D-4010-B7CD-C4D6EE8AC5EB}</Project>
       <Name>Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Validators\Validators.csproj">
+      <Project>{f4241f20-3333-471e-b4b8-8b7ec9b31ada}</Project>
+      <Name>Validators</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebViewModels\WebViewModels.csproj">
       <Project>{e58720f1-d2c0-4ff7-8e6f-62ded2739e30}</Project>

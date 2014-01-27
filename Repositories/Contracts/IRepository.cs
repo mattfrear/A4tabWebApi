@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
+using Domain;
 
 namespace Repositories.Contracts
 {
@@ -12,6 +12,6 @@ namespace Repositories.Contracts
         void Delete(T entity);
         void Update(T entity); 
         IEnumerable<T> SearchFor(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> GetAll(int offset = 0, int limit = 10, string sort = "Id");
+        IEnumerable<T> GetAll(TabQuery tabQuery);
     }
 }

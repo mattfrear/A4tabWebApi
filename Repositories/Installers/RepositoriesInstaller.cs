@@ -13,6 +13,11 @@ namespace Repositories.Installers
                 .WithService.FirstInterface()
                 .LifestyleTransient()
                 .Configure(x => x.DependsOn(Dependency.OnAppSettingsValue("connectionString", "connectionString"))));
+
+            container.Register(Classes.FromThisAssembly()
+                .Where(type => !type.Namespace.Contains("Contracts") && type.Name.EndsWith("Generator"))
+                .WithService.FirstInterface()
+                .LifestyleTransient());
         }
     }
 }

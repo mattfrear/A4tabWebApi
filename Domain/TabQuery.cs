@@ -1,4 +1,4 @@
-﻿namespace WebViewModels
+﻿namespace Domain
 {
     public class TabQuery
     {

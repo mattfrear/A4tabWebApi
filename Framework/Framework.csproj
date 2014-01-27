@@ -40,12 +40,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IParameterValidator.cs" />
-    <Compile Include="ParameterError.cs" />
-    <Compile Include="ParameterValidator.cs" />
+    <Compile Include="Validators\ParameterError.cs" />
+    <Compile Include="Validators\ParameterValidator.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{f5c5f25e-368d-46d0-aea1-d49f83e15a73}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebViewModels\WebViewModels.csproj">
       <Project>{E58720F1-D2C0-4FF7-8E6F-62DED2739E30}</Project>
       <Name>WebViewModels</Name>
