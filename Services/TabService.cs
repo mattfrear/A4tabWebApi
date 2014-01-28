@@ -5,13 +5,18 @@ using Services.Contracts;
 
 namespace Services
 {
-    public class RecentTabService : IRecentTabService
+    public class TabService : ITabService
     {
         private readonly IRepository<Tab> tabRepository;
 
-        public RecentTabService(IRepository<Tab> tabRepository)
+        public TabService(IRepository<Tab> tabRepository)
         {
             this.tabRepository = tabRepository;
+        }
+
+        public IEnumerable<Tab> Get(TabQuery tabQuery)
+        {
+            return tabRepository.GetAll(tabQuery);
         }
 
         public IEnumerable<Tab> GetRecentTabs()

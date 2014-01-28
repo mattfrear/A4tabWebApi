@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ApplicationServices.Contracts;
 using AutoMapper;
+using Domain;
 using Services.Contracts;
 using WebViewModels;
 
@@ -8,16 +9,22 @@ namespace ApplicationServices
 {
     public class TabApplicationService : ITabApplicationService
     {
-        private readonly IRecentTabService recentTabService;
+        private readonly ITabService tabService;
 
-        public TabApplicationService(IRecentTabService recentTabService)
+        public TabApplicationService(ITabService tabService)
         {
-            this.recentTabService = recentTabService;
+            this.tabService = tabService;
+        }
+        
+        public IEnumerable<TabViewModel> Get(TabQuery tabQuery)
+        {
+            var tabs = tabService.Get(tabQuery);
+            return Mapper.Map<IEnumerable<TabViewModel>>(tabs);
         }
 
         public IEnumerable<TabViewModel> GetRecentTabs()
         {
-            var tabs = recentTabService.GetRecentTabs();
+            var tabs = tabService.GetRecentTabs();
             return Mapper.Map<IEnumerable<TabViewModel>>(tabs);
         }
     }

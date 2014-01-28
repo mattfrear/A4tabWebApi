@@ -3,8 +3,9 @@ using Domain;
 
 namespace Services.Contracts
 {
-    public interface IRecentTabService
+    public interface ITabService
     {
+        IEnumerable<Tab> Get(TabQuery tabQuery);
         IEnumerable<Tab> GetRecentTabs();
     }
 }

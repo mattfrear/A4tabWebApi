@@ -25,6 +25,11 @@ namespace A4tabWebApi.Controllers
         [Route("")]
         public IHttpActionResult Get([FromUri]TabQuery query)
         {
+            if (query == null)
+            {
+                query = new TabQuery();
+            }
+
             tabQueryValidator.Validate(query);
 
             if (tabQueryValidator.HasErrors())
@@ -32,7 +37,7 @@ namespace A4tabWebApi.Controllers
                 return BadRequest(tabQueryValidator.ToString());
             }
 
-            var tabs = tabApplicationService.GetRecentTabs();
+            var tabs = tabApplicationService.Get(query);
             return Ok(tabs);
         }
 

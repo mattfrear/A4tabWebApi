@@ -7,5 +7,6 @@ namespace ApplicationServices.Contracts
     public interface ITabApplicationService
     {
         IEnumerable<TabViewModel> GetRecentTabs();
+        IEnumerable<TabViewModel> Get(TabQuery tabQuery);
     }
 }

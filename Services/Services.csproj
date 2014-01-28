@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\IRecentTabService.cs" />
+    <Compile Include="Contracts\ITabService.cs" />
     <Compile Include="Installers\ServicesInstaller.cs" />
-    <Compile Include="RecentTabService.cs" />
+    <Compile Include="TabService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="ApplicationServices\TabApplicationServicesTests.cs" />
     <Compile Include="Repositories\SqlGeneratorTests.cs" />
-    <Compile Include="Services\RecentTabServiceTests.cs" />
+    <Compile Include="Services\TabServiceTests.cs" />
     <Compile Include="Validators\TabQueryValidatorTests.cs" />
     <Compile Include="Web\Controllers\TabsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
