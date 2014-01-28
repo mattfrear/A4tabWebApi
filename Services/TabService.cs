@@ -21,7 +21,7 @@ namespace Services
 
         public IEnumerable<Tab> GetRecentTabs()
         {
-            return tabRepository.GetAll(new TabQuery { Sort = "-Tab.CreatedOn" });
+            return tabRepository.GetAll(new TabQuery { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
         }
     }
 }
