@@ -4,17 +4,16 @@ using System.Data.SqlClient;
 using System.Linq.Expressions;
 using Dapper;
 using Domain;
-using Framework.Contracts;
 using Repositories.Contracts;
 
 namespace Repositories
 {
     public class TabRepository : IRepository<Tab>
     {
-        private readonly ISqlGenerator sqlGenerator;
+        private readonly ISqlGenerator<TabQuery> sqlGenerator;
         private readonly SqlConnection connection;
 
-        public TabRepository(string connectionString, ISqlGenerator sqlGenerator)
+        public TabRepository(string connectionString, ISqlGenerator<TabQuery> sqlGenerator)
         {
             this.sqlGenerator = sqlGenerator;
             connection = new SqlConnection(connectionString);

@@ -2,8 +2,8 @@
 
 namespace Repositories.Contracts
 {
-    public interface ISqlGenerator
+    public interface ISqlGenerator<in T>
     {
-        string GenerateSql(TabQuery tabQuery);
+        string GenerateSql(T query);
     }
 }

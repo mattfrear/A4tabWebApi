@@ -22,6 +22,7 @@ namespace A4tabWebApi.Controllers
         /// </summary>
         /// <param name="query">Offset: Default: 0. Must be &gt;= 0. Limit: Default: 10. Must be &gt; 0 and &lt;= 100. Sort: Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns>An array of TabViewModel</returns>
+        [Route("")]
         public IHttpActionResult Get([FromUri]TabQuery query)
         {
             tabQueryValidator.Validate(query);

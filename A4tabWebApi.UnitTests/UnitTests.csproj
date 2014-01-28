@@ -71,7 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\TabApplicationServicesTests.cs" />
+    <Compile Include="Repositories\SqlGeneratorTests.cs" />
     <Compile Include="Services\RecentTabServiceTests.cs" />
+    <Compile Include="Validators\TabQueryValidatorTests.cs" />
     <Compile Include="Web\Controllers\TabsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -103,13 +105,16 @@
       <Project>{127B471F-B8BC-4267-9043-1A2DA74D9018}</Project>
       <Name>Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Validators\Validators.csproj">
+      <Project>{F4241F20-3333-471E-B4B8-8B7EC9B31ADA}</Project>
+      <Name>Validators</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebViewModels\WebViewModels.csproj">
       <Project>{E58720F1-D2C0-4FF7-8E6F-62DED2739E30}</Project>
       <Name>WebViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositories\" />
     <Folder Include="Web\Validation\" />
   </ItemGroup>
   <ItemGroup>

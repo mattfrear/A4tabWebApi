@@ -5,11 +5,11 @@ using Repositories.Contracts;
 
 namespace Repositories
 {
-    public class SqlGenerator : ISqlGenerator
+    public class TabQuerySqlGenerator : ISqlGenerator<TabQuery>
     {
         private readonly IParameterValidator<TabQuery> tabQueryValidator;
 
-        public SqlGenerator(IParameterValidator<TabQuery> tabQueryValidator)
+        public TabQuerySqlGenerator(IParameterValidator<TabQuery> tabQueryValidator)
         {
             this.tabQueryValidator = tabQueryValidator;
         }

@@ -54,7 +54,7 @@
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Installers\RepositoriesInstaller.cs" />
     <Compile Include="Contracts\ISqlGenerator.cs" />
-    <Compile Include="SqlGenerator.cs" />
+    <Compile Include="TabQuerySqlGenerator.cs" />
     <Compile Include="TabRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
