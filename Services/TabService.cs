@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Domain;
 using Repositories.Contracts;
 using Services.Contracts;
@@ -8,20 +10,62 @@ namespace Services
     public class TabService : ITabService
     {
         private readonly IRepository<Tab> tabRepository;
+        private readonly IRepository<Artist> artistRepository;
 
-        public TabService(IRepository<Tab> tabRepository)
+        public TabService(IRepository<Tab> tabRepository, IRepository<Artist> artistRepository)
         {
             this.tabRepository = tabRepository;
+            this.artistRepository = artistRepository;
         }
 
-        public IEnumerable<Tab> Get(TabQuery tabQuery)
+        public IEnumerable<Tab> Get(QueryOption queryOption)
         {
-            return tabRepository.GetAll(tabQuery);
+            return tabRepository.GetAll(queryOption);
         }
 
         public IEnumerable<Tab> GetRecentTabs()
         {
-            return tabRepository.GetAll(new TabQuery { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
+            return tabRepository.GetAll(new QueryOption { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
+        }
+
+        public void InsertOrUpdate(Tab tab)
+        {
+            if (tab.Id == 0)
+            {
+                Insert(tab);
+            }
+            else
+            {
+                Update(tab);
+            }
+        }
+
+        private void Update(Tab tab)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Insert(Tab tab)
+        {
+            if (tab.Artist == null || (tab.Artist.Id == 0 && string.IsNullOrWhiteSpace(tab.Artist.Name)))
+            {
+                throw new ArgumentException("Tab.Artist cannot be null");
+            }
+
+            if (tab.Artist.Id == 0)
+            {
+                var artist = artistRepository.SearchFor(tab.Artist.Name).FirstOrDefault();
+                if (artist == null)
+                {
+                    artistRepository.Insert(tab.Artist);
+                }
+                else
+                {
+                    tab.Artist.Id = artist.Id;
+                }
+            }
+
+            tabRepository.Insert(tab);
         }
     }
 }

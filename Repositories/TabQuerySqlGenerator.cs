@@ -5,18 +5,18 @@ using Repositories.Contracts;
 
 namespace Repositories
 {
-    public class TabQuerySqlGenerator : ISqlGenerator<TabQuery>
+    public class TabQuerySqlGenerator : ISqlGenerator<QueryOption>
     {
-        private readonly IParameterValidator<TabQuery> tabQueryValidator;
+        private readonly IParameterValidator<QueryOption> tabQueryValidator;
 
-        public TabQuerySqlGenerator(IParameterValidator<TabQuery> tabQueryValidator)
+        public TabQuerySqlGenerator(IParameterValidator<QueryOption> tabQueryValidator)
         {
             this.tabQueryValidator = tabQueryValidator;
         }
 
-        public string GenerateSql(TabQuery tabQuery)
+        public string GenerateGetAll(QueryOption queryOption)
         {
-            tabQueryValidator.Validate(tabQuery);
+            tabQueryValidator.Validate(queryOption);
             if (tabQueryValidator.HasErrors())
             {
                 throw new ArgumentException(tabQueryValidator.ToString());
@@ -24,17 +24,21 @@ namespace Repositories
 
             var sortOrder = "ASC";
 
-            if (tabQuery.Sort.StartsWith("-"))
+            if (queryOption.Sort.StartsWith("-"))
             {
-                tabQuery.Sort = tabQuery.Sort.Substring(1);
+                queryOption.Sort = queryOption.Sort.Substring(1);
                 sortOrder = "DESC";
             }
 
-            var sql =
-                string.Format(
+            var sql = string.Format(
                     "SELECT {0} FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by {1} {2} OFFSET {3} ROWS FETCH NEXT {4} ROWS ONLY",
-                    tabQuery.Fields, tabQuery.Sort, sortOrder, tabQuery.Offset, tabQuery.Limit);
+                    queryOption.Fields, queryOption.Sort, sortOrder, queryOption.Offset, queryOption.Limit);
             return sql;
+        }
+
+        public string GenerateInsert()
+        {
+            return @"insert Tab (Author, ArtistId, Name, Content, CreatedOn, ModifiedOn) values (@Author, @Artist.Id, @Name, @Content, @CreatedOn, @ModifiedOn) select cast(scope_identity() as int)";
         }
     }
 }

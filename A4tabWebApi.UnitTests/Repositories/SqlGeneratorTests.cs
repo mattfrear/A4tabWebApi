@@ -11,13 +11,13 @@ namespace UnitTests.Repositories
     [TestFixture]
     public class SqlGeneratorTests
     {
-        private ISqlGenerator<TabQuery> sqlGenerator;
-        private Mock<IParameterValidator<TabQuery>> validator;
+        private ISqlGenerator<QueryOption> sqlGenerator;
+        private Mock<IParameterValidator<QueryOption>> validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new Mock<IParameterValidator<TabQuery>>();
+            validator = new Mock<IParameterValidator<QueryOption>>();
             sqlGenerator = new TabQuerySqlGenerator(validator.Object);
         }
 
@@ -27,10 +27,10 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_From_Default()
             {
                 // Arrange
-                var tabQuery = new TabQuery();
+                var tabQuery = new QueryOption();
 
                 // Act
-                var sql = sqlGenerator.GenerateSql(tabQuery);
+                var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by Tab.Id ASC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY");
@@ -40,10 +40,10 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Limit()
             {
                 // Arrange
-                var tabQuery = new TabQuery { Limit = 20 };
+                var tabQuery = new QueryOption { Limit = 20 };
 
                 // Act
-                var sql = sqlGenerator.GenerateSql(tabQuery);
+                var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by Tab.Id ASC OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY");
@@ -53,10 +53,10 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Offset()
             {
                 // Arrange
-                var tabQuery = new TabQuery { Offset = 20 };
+                var tabQuery = new QueryOption { Offset = 20 };
 
                 // Act
-                var sql = sqlGenerator.GenerateSql(tabQuery);
+                var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by Tab.Id ASC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY");
@@ -66,10 +66,10 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Fields()
             {
                 // Arrange
-                var tabQuery = new TabQuery {Fields = "Tab.Id, Artist.Name" };
+                var tabQuery = new QueryOption {Fields = "Tab.Id, Artist.Name" };
 
                 // Act
-                var sql = sqlGenerator.GenerateSql(tabQuery);
+                var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT Tab.Id, Artist.Name FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by Tab.Id ASC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY");
@@ -79,10 +79,10 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_SortOrder()
             {
                 // Arrange
-                var tabQuery = new TabQuery { Sort = "CreatedOn"};
+                var tabQuery = new QueryOption { Sort = "CreatedOn"};
 
                 // Act
-                var sql = sqlGenerator.GenerateSql(tabQuery);
+                var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by CreatedOn ASC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY");
@@ -92,10 +92,10 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Desc_SortOrder()
             {
                 // Arrange
-                var tabQuery = new TabQuery { Sort = "-CreatedOn" };
+                var tabQuery = new QueryOption { Sort = "-CreatedOn" };
 
                 // Act
-                var sql = sqlGenerator.GenerateSql(tabQuery);
+                var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by CreatedOn DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY");

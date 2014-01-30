@@ -5,13 +5,13 @@ using Framework.Validators;
 
 namespace Validators
 {
-    public class TabQueryValidator : ParameterValidator, IParameterValidator<TabQuery>
+    public class QueryOptionValidator : ParameterValidator, IParameterValidator<QueryOption>
     {
-        public void Validate(TabQuery tabQuery)
+        public void Validate(QueryOption queryOption)
         {
-            Validate(tabQuery.Offset >= 0, "offset", "invalid parameter offset - must be greater than or equal to 0. ");
+            Validate(queryOption.Offset >= 0, "offset", "invalid parameter offset - must be greater than or equal to 0. ");
             
-            Validate(tabQuery.Limit > 0 && tabQuery.Limit <= 100, "Limit", "invalid parameter limit - must be greater than 0 and less than or equal to 100. ");
+            Validate(queryOption.Limit > 0 && queryOption.Limit <= 100, "Limit", "invalid parameter limit - must be greater than 0 and less than or equal to 100. ");
             
             var sortWhiteList = new[]
             {
@@ -19,9 +19,9 @@ namespace Validators
                 "-Tab.Id", "-Tab.Name", "-Tab.CreatedOn", "-Tab.ModifiedOn", "-Artist.Name", "-Tab.CreatedOn"
             };
 
-            Validate(sortWhiteList.Contains(tabQuery.Sort), "Sort", "invalid parameter sort:" + tabQuery.Sort +". Must be one of " + string.Join(" or ", sortWhiteList));
+            Validate(sortWhiteList.Contains(queryOption.Sort), "Sort", "invalid parameter sort:" + queryOption.Sort +". Must be one of " + string.Join(" or ", sortWhiteList));
 
-            if (tabQuery.Fields == "*")
+            if (queryOption.Fields == "*")
             {
                 return;
             }
@@ -34,7 +34,7 @@ namespace Validators
 
             var mandatoryFields = new[] { "Tab.Id", "Artist.Id" };
 
-            var allFields = tabQuery.Fields.Replace(" ", "").Split(',');
+            var allFields = queryOption.Fields.Replace(" ", "").Split(',');
             
             foreach (var field in allFields)
             {

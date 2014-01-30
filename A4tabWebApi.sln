@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebViewModels", "WebViewMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators", "Validators\Validators.csproj", "{F4241F20-3333-471E-B4B8-8B7EC9B31ADA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer", "Importer\Importer.csproj", "{A5900126-2D02-420D-8010-C6A6B3E5A51C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{F4241F20-3333-471E-B4B8-8B7EC9B31ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4241F20-3333-471E-B4B8-8B7EC9B31ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4241F20-3333-471E-B4B8-8B7EC9B31ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5900126-2D02-420D-8010-C6A6B3E5A51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5900126-2D02-420D-8010-C6A6B3E5A51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5900126-2D02-420D-8010-C6A6B3E5A51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5900126-2D02-420D-8010-C6A6B3E5A51C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

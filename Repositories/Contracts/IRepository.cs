@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Domain;
 
 namespace Repositories.Contracts
@@ -11,7 +9,7 @@ namespace Repositories.Contracts
         void Insert(T entity);
         void Delete(T entity);
         void Update(T entity); 
-        IEnumerable<T> SearchFor(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> GetAll(TabQuery tabQuery);
+        IEnumerable<T> SearchFor(string name);
+        IEnumerable<T> GetAll(QueryOption queryOption);
     }
 }

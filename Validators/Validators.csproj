@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Installers\ValidatorsInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TabQueryValidator.cs" />
+    <Compile Include="QueryOptionValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

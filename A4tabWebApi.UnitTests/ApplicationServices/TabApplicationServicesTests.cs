@@ -33,7 +33,7 @@ namespace UnitTests.ApplicationServices
             public void Should_Call_Service_And_Map_Result()
             {
                 // Arrange
-                var tabQuery = new TabQuery();
+                var tabQuery = new QueryOption();
                 var tabs = new List<Tab> { new Tab { Artist = new Artist { Name = "Bob Marley" }, Name = "Easy Skankin'" } };
                 tabService.Setup(x => x.Get(tabQuery)).Returns(tabs);
 

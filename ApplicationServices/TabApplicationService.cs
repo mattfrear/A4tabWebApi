@@ -16,10 +16,15 @@ namespace ApplicationServices
             this.tabService = tabService;
         }
         
-        public IEnumerable<TabViewModel> Get(TabQuery tabQuery)
+        public IEnumerable<TabViewModel> Get(QueryOption queryOption)
         {
-            var tabs = tabService.Get(tabQuery);
+            var tabs = tabService.Get(queryOption);
             return Mapper.Map<IEnumerable<TabViewModel>>(tabs);
+        }
+
+        public void Insert(Tab value)
+        {
+            tabService.Insert(value);
         }
 
         public IEnumerable<TabViewModel> GetRecentTabs()

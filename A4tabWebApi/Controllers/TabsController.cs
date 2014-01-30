@@ -9,9 +9,9 @@ namespace A4tabWebApi.Controllers
     public class TabsController : ApiController
     {
         private readonly ITabApplicationService tabApplicationService;
-        private readonly IParameterValidator<TabQuery> tabQueryValidator;
+        private readonly IParameterValidator<QueryOption> tabQueryValidator;
 
-        public TabsController(ITabApplicationService tabApplicationService, IParameterValidator<TabQuery> tabQueryValidator)
+        public TabsController(ITabApplicationService tabApplicationService, IParameterValidator<QueryOption> tabQueryValidator)
         {
             this.tabApplicationService = tabApplicationService;
             this.tabQueryValidator = tabQueryValidator;
@@ -20,24 +20,24 @@ namespace A4tabWebApi.Controllers
         /// <summary>
         /// Gets a list of Tabs
         /// </summary>
-        /// <param name="query">Offset: Default: 0. Must be &gt;= 0. Limit: Default: 10. Must be &gt; 0 and &lt;= 100. Sort: Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
+        /// <param name="queryOption">Offset: Default: 0. Must be &gt;= 0. Limit: Default: 10. Must be &gt; 0 and &lt;= 100. Sort: Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns>An array of TabViewModel</returns>
         [Route("")]
-        public IHttpActionResult Get([FromUri]TabQuery query)
+        public IHttpActionResult Get([FromUri]QueryOption queryOption)
         {
-            if (query == null)
+            if (queryOption == null)
             {
-                query = new TabQuery();
+                queryOption = new QueryOption();
             }
 
-            tabQueryValidator.Validate(query);
+            tabQueryValidator.Validate(queryOption);
 
             if (tabQueryValidator.HasErrors())
             {
                 return BadRequest(tabQueryValidator.ToString());
             }
 
-            var tabs = tabApplicationService.Get(query);
+            var tabs = tabApplicationService.Get(queryOption);
             return Ok(tabs);
         }
 
@@ -62,6 +62,7 @@ namespace A4tabWebApi.Controllers
         // POST api/tabs
         public void Post(Tab value)
         {
+            tabApplicationService.Insert(value);
         }
 
         // PUT api/tabs/5

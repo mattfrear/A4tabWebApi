@@ -2,8 +2,9 @@
 
 namespace Repositories.Contracts
 {
-    public interface ISqlGenerator<in T>
+    public interface ISqlGenerator<in TEntity>
     {
-        string GenerateSql(T query);
+        string GenerateGetAll(QueryOption queryOption);
+        string GenerateInsert();
     }
 }
