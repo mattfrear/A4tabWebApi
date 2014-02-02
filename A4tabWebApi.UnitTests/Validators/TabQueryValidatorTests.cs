@@ -48,7 +48,7 @@ namespace UnitTests.Validators
             public void Should_Return_No_Errors_For_Fields()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Fields = "Tab.Id, Artist.Name, Tab.Name" };
+                var tabQuery = new QueryOption { Fields = "Tab.Id, Artist.Id, Artist.Name, Tab.Name" };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -124,7 +124,7 @@ namespace UnitTests.Validators
 
                 // Assert
                 validator.HasErrors().ShouldBeTrue();
-                validator.ToString().ShouldEqual("invalid parameter fields - bad value:Blah. Must be either * or one or more of Tab.Id or Tab.Author or Tab.ArtistId or Tab.Name or Tab.Content or Tab.CreatedOn or Tab.ModifiedOn or Artist.Id or Artist.Name separated by a comma.");
+                validator.ToString().ShouldEqual("invalid parameter fields - bad value:Blah. Must be either * or one or more of Tab.Id or Tab.Author or Tab.ArtistId or Tab.Name or Tab.Content or Tab.CreatedOn or Tab.ModifiedOn or Artist.Id or Artist.Name separated by a comma. invalid parameter fields - must include Tab.Id. invalid parameter fields - must include Artist.Id. ");
             }
 
             [Test]
@@ -138,7 +138,7 @@ namespace UnitTests.Validators
 
                 // Assert
                 validator.HasErrors().ShouldBeTrue();
-                validator.ToString().ShouldEqual("invalid parameter fields - must be include Tab.Id and Artist.Id.");
+                validator.ToString().ShouldEqual("invalid parameter fields - must include Artist.Id. ");
             }
         }
     }

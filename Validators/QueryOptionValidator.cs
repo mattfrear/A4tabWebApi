@@ -38,12 +38,12 @@ namespace Validators
             
             foreach (var field in allFields)
             {
-                Validate(fieldsWhiteList.Contains(field.Trim()), "Fields", "invalid parameter fields - bad value:" + field + ". Must be either * or one or more of " + string.Join(" or ", fieldsWhiteList) + " separated by a comma.");
+                Validate(fieldsWhiteList.Contains(field.Trim()), "Fields", "invalid parameter fields - bad value:" + field + ". Must be either * or one or more of " + string.Join(" or ", fieldsWhiteList) + " separated by a comma. ");
             }
 
             foreach (var mandatoryField in mandatoryFields)
             {
-                Validate(allFields.Contains(mandatoryField), "Fields", "invalid parameter fields - must be include Tab.Id and Artist.Id.");
+                Validate(allFields.Contains(mandatoryField), "Fields", "invalid parameter fields - must include " + mandatoryField + ". ");
             }
         }
     }
