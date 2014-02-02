@@ -1,0 +1,15 @@
+﻿
+<h1>A4 tab</h1>
+<p class="lead"></p>
+
+<div>
+    <h2>All tabs</h2>
+    <div>
+        {{error}}
+    </div>
+    <ul>
+        <li ng-repeat="tab in tabs">
+            <a href="#/tabs/{{tab.Id}}">{{tab.ArtistName}} {{tab.Name}}</a>
+        </li>
+    </ul>
+</div>

@@ -5,27 +5,13 @@
     <title>My HTML File</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular-route.js"></script>
     <script src="/app/app.js"></script>
 </head>
     <body ng-app="a4tab">
 
-
         <div class="container">
-
-            <div ng-controller="RecentCtrl">
-                <h1>A4 tab</h1>
-                <p class="lead">Welcome! Blah blah welcome message.</p>
-                <h2>Recent tabs</h2>
-                <div>
-                    {{error}}
-                </div>
-                <ul>
-                    <li ng-repeat="tab in recentTabs">
-                        <a href="/tabs/{{tab.Id}}">{{tab.ArtistName}} {{tab.Name}}</a>
-                    </li>
-                </ul>
-            </div>
-
+            <div ng-view></div>
         </div>
 
         <script src="https://code.jquery.com/jquery.js"></script>
