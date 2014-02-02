@@ -82,5 +82,23 @@ namespace A4tabWebApi.UnitTests.Controllers
                 tabResult.First().ArtistName.ShouldEqual("Bob Marley");
             }
         }
+
+        public class Post : TabsControllerTests
+        {
+            [Test]
+            public void Should_Call_ApplicationService()
+            {
+                // Arrange
+                var tab = new Tab();
+                tabApplicationService.Setup(x => x.Insert(tab));
+
+                // Act
+                controller.Post(tab);
+
+                // Assert
+                tabApplicationService.VerifyAll();
+            }
+
+        }
     }
 }

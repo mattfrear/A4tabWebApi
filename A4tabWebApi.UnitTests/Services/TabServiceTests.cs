@@ -1,10 +1,10 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Moq;
 using NUnit.Framework;
-using Repositories;
 using Repositories.Contracts;
 using Services;
-using Validators;
+using Should;
 
 namespace UnitTests.Services
 {
@@ -59,14 +59,71 @@ namespace UnitTests.Services
         public class Insert : TabServiceTests
         {
             [Test]
-            public void Should_Call_ArtistRepository_When_ArtistId_Is_Zero()
+            public void Should_Throw_Argument_Exception_When_Artist_Is_Null()
             {
-                var connectionString = @"Data Source=.\sqlexpress;Initial Catalog=A4tab;Integrated Security=True";
-                service = new TabService(new TabRepository(connectionString, new TabQuerySqlGenerator(new QueryOptionValidator())), new ArtistRepository(connectionString));
+                // Arrange
+                var tab = new Tab();
 
-                var tab = new Tab { Artist = new Artist { Name = "wa hey" }, Author = "Matt Frear", Content="Blah blah", Name = "Balls" };
+                // Act
+                Assert.Throws<ArgumentException>(() => service.Insert(tab));
+            }
 
+
+            [Test]
+            public void Should_Throw_Argument_Exception_When_Artist_Has_No_Name()
+            {
+                // Arrange
+                var tab = new Tab { Artist = new Artist() };
+
+                // Act
+                Assert.Throws<ArgumentException>(() => service.Insert(tab));
+            }
+
+            [Test]
+            public void Should_Search_For_Artist_And_Set_ArtistId_When_ArtistId_Is_Zero()
+            {
+                // Arrange
+                var tab = new Tab { Artist = new Artist { Name = "Bob" } };
+                artistRepository.Setup(x => x.SearchFor("Bob")).Returns(new[] { new Artist { Id = 123, Name = "Bob" }});
+
+                // Art
                 service.Insert(tab);
+
+                // Assert
+                artistRepository.VerifyAll();
+                tab.Artist.Id.ShouldEqual(123);
+            }
+
+            [Test]
+            public void Should_Insert_Artist_When_Artist_Does_Not_Exist()
+            {
+                // Arrange
+                var artist = new Artist { Name = "Bob" };
+                var tab = new Tab { Artist = artist };
+                artistRepository.Setup(x => x.SearchFor("Bob")).Returns(new Artist[] { });
+                artistRepository.Setup(x => x.Insert(artist));
+
+                // Art
+                service.Insert(tab);
+
+                // Assert
+                artistRepository.VerifyAll();
+            }
+
+            [Test]
+            public void Should_Insert_Tab()
+            {
+                // Arrange
+                var artist = new Artist { Id = 123, Name = "Bob" };
+                var tab = new Tab { Artist = artist };
+                tabRepository.Setup(x => x.Insert(tab));
+
+                // Art
+                service.Insert(tab);
+
+                // Assert
+                artistRepository.VerifyAll();
+                tabRepository.VerifyAll();
             }
         }
     }

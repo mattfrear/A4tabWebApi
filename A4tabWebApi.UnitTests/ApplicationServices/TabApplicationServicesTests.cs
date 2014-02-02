@@ -65,5 +65,23 @@ namespace UnitTests.ApplicationServices
                 tabViewModels.First().Name.ShouldEqual("Easy Skankin'");
             }
         }
+
+        public class Insert : TabApplicationServicesTests
+        {
+            [Test]
+            public void Should_Call_Service()
+            {
+                // Arrange
+                var tab = new Tab();
+                tabService.Setup(x => x.Insert(tab));
+
+                // Act
+                applicationService.Insert(tab);
+
+                // Assert
+                tabService.VerifyAll();
+            }
+        }
+
     }
 }
