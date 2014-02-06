@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Domain;
+using Repositories;
 using Repositories.Contracts;
 using Services.Contracts;
 
@@ -18,7 +19,7 @@ namespace Services
             this.artistRepository = artistRepository;
         }
 
-        public IEnumerable<Tab> Get(QueryOption queryOption)
+        public IEnumerable<Tab> GetAll(QueryOption queryOption)
         {
             return tabRepository.GetAll(queryOption);
         }
@@ -66,6 +67,11 @@ namespace Services
             }
 
             tabRepository.Insert(tab);
+        }
+
+        public Tab Get(int tabId)
+        {
+            return tabRepository.GetById(tabId);
         }
     }
 }

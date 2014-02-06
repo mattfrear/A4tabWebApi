@@ -22,7 +22,13 @@ namespace Repositories
 
         public Tab GetById(int id)
         {
-            throw new NotImplementedException();
+            const string sql = "select * from Tab where Id = @id";
+
+            connection.Open();
+            var tab = connection.Query<Tab>(sql, new { id });
+            connection.Close();
+
+            return tab.SingleOrDefault();
         }
 
         public void Insert(Tab tab)

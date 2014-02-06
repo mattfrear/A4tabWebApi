@@ -33,7 +33,7 @@ namespace UnitTests.Services
                 tabRepository.Setup(x => x.GetAll(tabQuery));
 
                 // Act
-                service.Get(tabQuery);
+                service.GetAll(tabQuery);
 
                 // Assert
                 tabRepository.VerifyAll();

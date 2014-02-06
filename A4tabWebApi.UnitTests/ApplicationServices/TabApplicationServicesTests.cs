@@ -35,10 +35,10 @@ namespace UnitTests.ApplicationServices
                 // Arrange
                 var tabQuery = new QueryOption();
                 var tabs = new List<Tab> { new Tab { Artist = new Artist { Name = "Bob Marley" }, Name = "Easy Skankin'" } };
-                tabService.Setup(x => x.Get(tabQuery)).Returns(tabs);
+                tabService.Setup(x => x.GetAll(tabQuery)).Returns(tabs);
 
                 // Act
-                var result = applicationService.Get(tabQuery);
+                var result = applicationService.GetAll(tabQuery);
 
                 // Assert
                 var tabViewModels = result.ToList();

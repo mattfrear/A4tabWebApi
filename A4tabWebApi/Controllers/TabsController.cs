@@ -37,7 +37,7 @@ namespace A4tabWebApi.Controllers
                 return BadRequest(tabQueryValidator.ToString());
             }
 
-            var tabs = tabApplicationService.Get(queryOption);
+            var tabs = tabApplicationService.GetAll(queryOption);
             return Ok(tabs);
         }
 
@@ -54,9 +54,16 @@ namespace A4tabWebApi.Controllers
         }
 
         // GET api/tabs/5
-        public string Get(int id)
+        [Route("{id}")]
+        public IHttpActionResult Get(int id)
         {
-            return "value";
+            // TODO check test coverage of Insert
+            // TODO add tests for Get
+            // TODO implement angular Get page
+            // TODO implement importer
+
+            var tab = tabApplicationService.Get(id);
+            return Ok(tab);
         }
 
         // POST api/tabs

@@ -69,7 +69,7 @@ namespace A4tabWebApi.UnitTests.Controllers
                 tabQueryValidator.Setup(x => x.HasErrors()).Returns(false);
                 var tabs = new List<TabViewModel> { new TabViewModel { ArtistName = "Bob Marley" } };
                 var tabQuery = new QueryOption();
-                tabApplicationService.Setup(x => x.Get(tabQuery)).Returns(tabs);
+                tabApplicationService.Setup(x => x.GetAll(tabQuery)).Returns(tabs);
 
                 // Act
                 var result = controller.Get(tabQuery);

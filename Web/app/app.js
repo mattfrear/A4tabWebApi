@@ -33,5 +33,10 @@ app.controller("tabsCtrl", function($scope, $http) {
 });
 
 app.controller("tabCtrl", function($scope, $http, $routeParams) {
-    $scope.message = $routeParams.id;
+    
+    $http.get("http://localhost:1120/api/v1/tabs/" + $routeParams.id).success(function (data) {
+        $scope.tab = data;
+    }).error(function () {
+        $scope.error = "Couldn't load tabs.";
+    });
 });
