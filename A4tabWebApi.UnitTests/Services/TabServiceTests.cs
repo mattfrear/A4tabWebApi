@@ -23,13 +23,13 @@ namespace UnitTests.Services
             service = new TabService(tabRepository.Object, artistRepository.Object);
         }
 
-        public class Get : TabServiceTests
+        public class GetAll : TabServiceTests
         {
             [Test]
             public void Should_Call_Repository()
             {
                 // Arrange
-                var tabQuery = new QueryOption();
+                var tabQuery = new TabQueryOption();
                 tabRepository.Setup(x => x.GetAll(tabQuery));
 
                 // Act
@@ -46,7 +46,7 @@ namespace UnitTests.Services
             public void Should_Call_Repository()
             {
                 // Arrange
-                tabRepository.Setup(x => x.GetAll(It.Is<QueryOption>(y => y.Sort == "-Tab.CreatedOn")));
+                tabRepository.Setup(x => x.GetAll(It.Is<TabQueryOption>(y => y.Sort == "-Tab.CreatedOn")));
 
                 // Act
                 service.GetRecentTabs();
@@ -67,7 +67,6 @@ namespace UnitTests.Services
                 // Act
                 Assert.Throws<ArgumentException>(() => service.Insert(tab));
             }
-
 
             [Test]
             public void Should_Throw_Argument_Exception_When_Artist_Has_No_Name()
@@ -123,6 +122,23 @@ namespace UnitTests.Services
 
                 // Assert
                 artistRepository.VerifyAll();
+                tabRepository.VerifyAll();
+            }
+        }
+
+        public class GetById : TabServiceTests
+        {
+            [Test]
+            public void Should_Call_Repository()
+            {
+                // Arrange
+                var tabQuery = new TabQueryOption();
+                tabRepository.Setup(x => x.GetById(1, tabQuery));
+
+                // Act
+                service.GetById(1, tabQuery);
+
+                // Assert
                 tabRepository.VerifyAll();
             }
         }

@@ -19,7 +19,7 @@ namespace Repositories
             connection = new SqlConnection(connectionString);
         }
 
-        public Artist GetById(int id)
+        public Artist GetById(int id, TabQueryOption tabQueryOption)
         {
             throw new NotImplementedException();
         }
@@ -52,7 +52,7 @@ namespace Repositories
             return artists;
         }
 
-        public IEnumerable<Artist> GetAll(QueryOption queryOption)
+        public IEnumerable<Artist> GetAll(TabQueryOption tabQueryOption)
         {
             throw new NotImplementedException();
         }

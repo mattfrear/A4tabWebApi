@@ -9,9 +9,9 @@ namespace A4tabWebApi.Controllers
     public class TabsController : ApiController
     {
         private readonly ITabApplicationService tabApplicationService;
-        private readonly IParameterValidator<QueryOption> tabQueryValidator;
+        private readonly IParameterValidator<TabQueryOption> tabQueryValidator;
 
-        public TabsController(ITabApplicationService tabApplicationService, IParameterValidator<QueryOption> tabQueryValidator)
+        public TabsController(ITabApplicationService tabApplicationService, IParameterValidator<TabQueryOption> tabQueryValidator)
         {
             this.tabApplicationService = tabApplicationService;
             this.tabQueryValidator = tabQueryValidator;
@@ -20,24 +20,24 @@ namespace A4tabWebApi.Controllers
         /// <summary>
         /// Gets a list of Tabs
         /// </summary>
-        /// <param name="queryOption">Offset: Default: 0. Must be &gt;= 0. Limit: Default: 10. Must be &gt; 0 and &lt;= 100. Sort: Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
+        /// <param name="tabQueryOption">Offset: Default: 0. Must be &gt;= 0. Limit: Default: 10. Must be &gt; 0 and &lt;= 100. Sort: Default: Tab.Id. Must be Tab.Id or Tab.Name or Tab.CreatedOn or Tab.ModifiedOn or Artist.Name</param>
         /// <returns>An array of TabViewModel</returns>
         [Route("")]
-        public IHttpActionResult Get([FromUri]QueryOption queryOption)
+        public IHttpActionResult Get([FromUri]TabQueryOption tabQueryOption)
         {
-            if (queryOption == null)
+            if (tabQueryOption == null)
             {
-                queryOption = new QueryOption();
+                tabQueryOption = new TabQueryOption();
             }
 
-            tabQueryValidator.Validate(queryOption);
+            tabQueryValidator.Validate(tabQueryOption);
 
             if (tabQueryValidator.HasErrors())
             {
                 return BadRequest(tabQueryValidator.ToString());
             }
 
-            var tabs = tabApplicationService.GetAll(queryOption);
+            var tabs = tabApplicationService.GetAll(tabQueryOption);
             return Ok(tabs);
         }
 
@@ -55,14 +55,24 @@ namespace A4tabWebApi.Controllers
 
         // GET api/tabs/5
         [Route("{id}")]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(int id, [FromUri]TabQueryOption tabQueryOption)
         {
-            // TODO check test coverage of Insert
-            // TODO add tests for Get
             // TODO implement angular Get page
             // TODO implement importer
 
-            var tab = tabApplicationService.Get(id);
+            if (tabQueryOption == null)
+            {
+                tabQueryOption = new TabQueryOption();
+            }
+
+            tabQueryValidator.Validate(tabQueryOption);
+
+            if (tabQueryValidator.HasErrors())
+            {
+                return BadRequest(tabQueryValidator.ToString());
+            }
+
+            var tab = tabApplicationService.GetById(id, tabQueryOption);
             return Ok(tab);
         }
 

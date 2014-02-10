@@ -19,14 +19,14 @@ namespace Services
             this.artistRepository = artistRepository;
         }
 
-        public IEnumerable<Tab> GetAll(QueryOption queryOption)
+        public IEnumerable<Tab> GetAll(TabQueryOption tabQueryOption)
         {
-            return tabRepository.GetAll(queryOption);
+            return tabRepository.GetAll(tabQueryOption);
         }
 
         public IEnumerable<Tab> GetRecentTabs()
         {
-            return tabRepository.GetAll(new QueryOption { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
+            return tabRepository.GetAll(new TabQueryOption { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
         }
 
         public void InsertOrUpdate(Tab tab)
@@ -69,9 +69,9 @@ namespace Services
             tabRepository.Insert(tab);
         }
 
-        public Tab Get(int tabId)
+        public Tab GetById(int tabId, TabQueryOption tabQueryOption)
         {
-            return tabRepository.GetById(tabId);
+            return tabRepository.GetById(tabId, tabQueryOption);
         }
     }
 }

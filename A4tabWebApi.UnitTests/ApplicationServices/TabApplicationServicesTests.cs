@@ -27,13 +27,13 @@ namespace UnitTests.ApplicationServices
             Mapper.Initialize(x => x.AddProfile<DomainToViewModelProfile>());
         }
         
-        public class Get : TabApplicationServicesTests
+        public class GetAll : TabApplicationServicesTests
         {
             [Test]
             public void Should_Call_Service_And_Map_Result()
             {
                 // Arrange
-                var tabQuery = new QueryOption();
+                var tabQuery = new TabQueryOption();
                 var tabs = new List<Tab> { new Tab { Artist = new Artist { Name = "Bob Marley" }, Name = "Easy Skankin'" } };
                 tabService.Setup(x => x.GetAll(tabQuery)).Returns(tabs);
 
@@ -80,6 +80,25 @@ namespace UnitTests.ApplicationServices
 
                 // Assert
                 tabService.VerifyAll();
+            }
+        }
+
+        public class GetById : TabApplicationServicesTests
+        {
+            [Test]
+            public void Should_Call_Service_And_Map_Result()
+            {
+                // Arrange
+                var tabQuery = new TabQueryOption();
+                var tab = new Tab { Artist = new Artist { Name = "Bob Marley" }, Name = "Easy Skankin'" };
+                tabService.Setup(x => x.GetById(1, tabQuery)).Returns(tab);
+
+                // Act
+                var result = applicationService.GetById(1, tabQuery);
+
+                // Assert
+                result.ArtistName.ShouldEqual("Bob Marley");
+                result.Name.ShouldEqual("Easy Skankin'");
             }
         }
 

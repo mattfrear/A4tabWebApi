@@ -5,18 +5,18 @@ using Repositories.Contracts;
 
 namespace Repositories
 {
-    public class TabQuerySqlGenerator : ISqlGenerator<QueryOption>
+    public class TabQuerySqlGenerator : ISqlGenerator<TabQueryOption>
     {
-        private readonly IParameterValidator<QueryOption> tabQueryValidator;
+        private readonly IParameterValidator<TabQueryOption> tabQueryValidator;
 
-        public TabQuerySqlGenerator(IParameterValidator<QueryOption> tabQueryValidator)
+        public TabQuerySqlGenerator(IParameterValidator<TabQueryOption> tabQueryValidator)
         {
             this.tabQueryValidator = tabQueryValidator;
         }
 
-        public string GenerateGetAll(QueryOption queryOption)
+        public string GenerateGetAll(TabQueryOption tabQueryOption)
         {
-            tabQueryValidator.Validate(queryOption);
+            tabQueryValidator.Validate(tabQueryOption);
             if (tabQueryValidator.HasErrors())
             {
                 throw new ArgumentException(tabQueryValidator.ToString());
@@ -24,21 +24,32 @@ namespace Repositories
 
             var sortOrder = "ASC";
 
-            if (queryOption.Sort.StartsWith("-"))
+            if (tabQueryOption.Sort.StartsWith("-"))
             {
-                queryOption.Sort = queryOption.Sort.Substring(1);
+                tabQueryOption.Sort = tabQueryOption.Sort.Substring(1);
                 sortOrder = "DESC";
             }
 
             var sql = string.Format(
                     "SELECT {0} FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by {1} {2} OFFSET {3} ROWS FETCH NEXT {4} ROWS ONLY",
-                    queryOption.Fields, queryOption.Sort, sortOrder, queryOption.Offset, queryOption.Limit);
+                    tabQueryOption.Fields, tabQueryOption.Sort, sortOrder, tabQueryOption.Offset, tabQueryOption.Limit);
             return sql;
         }
 
         public string GenerateInsert()
         {
-            return @"insert Tab (Author, ArtistId, Name, Content, CreatedOn, ModifiedOn) values (@Author, @Artist.Id, @Name, @Content, @CreatedOn, @ModifiedOn) select cast(scope_identity() as int)";
+            return @"insert Tab (Author, ArtistId, Name, Content, CreatedOn, ModifiedOn) values (@Author, @ArtistId, @Name, @Content, @CreatedOn, @ModifiedOn) select cast(scope_identity() as int)";
+        }
+
+        public string GenerateGet(TabQueryOption tabQueryOption)
+        {
+            tabQueryValidator.Validate(tabQueryOption);
+            if (tabQueryValidator.HasErrors())
+            {
+                throw new ArgumentException(tabQueryValidator.ToString());
+            }
+
+            return string.Format("SELECT {0} FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id where Tab.Id = @id", tabQueryOption.Fields);
         }
     }
 }

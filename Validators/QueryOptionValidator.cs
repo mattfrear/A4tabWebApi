@@ -5,13 +5,13 @@ using Framework.Validators;
 
 namespace Validators
 {
-    public class QueryOptionValidator : ParameterValidator, IParameterValidator<QueryOption>
+    public class QueryOptionValidator : ParameterValidator, IParameterValidator<TabQueryOption>
     {
-        public void Validate(QueryOption queryOption)
+        public void Validate(TabQueryOption tabQueryOption)
         {
-            Validate(queryOption.Offset >= 0, "offset", "invalid parameter offset - must be greater than or equal to 0. ");
+            Validate(tabQueryOption.Offset >= 0, "offset", "invalid parameter offset - must be greater than or equal to 0. ");
             
-            Validate(queryOption.Limit > 0 && queryOption.Limit <= 100, "Limit", "invalid parameter limit - must be greater than 0 and less than or equal to 100. ");
+            Validate(tabQueryOption.Limit > 0 && tabQueryOption.Limit <= 100, "Limit", "invalid parameter limit - must be greater than 0 and less than or equal to 100. ");
             
             var sortWhiteList = new[]
             {
@@ -19,9 +19,9 @@ namespace Validators
                 "-Tab.Id", "-Tab.Name", "-Tab.CreatedOn", "-Tab.ModifiedOn", "-Artist.Name", "-Tab.CreatedOn"
             };
 
-            Validate(sortWhiteList.Contains(queryOption.Sort), "Sort", "invalid parameter sort:" + queryOption.Sort +". Must be one of " + string.Join(" or ", sortWhiteList));
+            Validate(sortWhiteList.Contains(tabQueryOption.Sort), "Sort", "invalid parameter sort:" + tabQueryOption.Sort +". Must be one of " + string.Join(" or ", sortWhiteList));
 
-            if (queryOption.Fields == "*")
+            if (tabQueryOption.Fields == "*")
             {
                 return;
             }
@@ -34,7 +34,7 @@ namespace Validators
 
             var mandatoryFields = new[] { "Tab.Id", "Artist.Id" };
 
-            var allFields = queryOption.Fields.Replace(" ", "").Split(',');
+            var allFields = tabQueryOption.Fields.Replace(" ", "").Split(',');
             
             foreach (var field in allFields)
             {

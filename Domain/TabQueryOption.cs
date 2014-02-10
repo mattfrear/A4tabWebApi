@@ -1,8 +1,8 @@
 ﻿namespace Domain
 {
-    public class QueryOption
+    public class TabQueryOption
     {
-        public QueryOption()
+        public TabQueryOption()
         {
             Offset = 0;
             Limit = 10;

@@ -2,7 +2,7 @@
 {
     public interface IParameterValidator<in T>
     {
-        void Validate(T queryOption);
+        void Validate(T tabQueryOption);
         bool HasErrors();
     }
 }

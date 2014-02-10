@@ -11,21 +11,22 @@ namespace Repositories
 {
     public class TabRepository : IRepository<Tab>
     {
-        private readonly ISqlGenerator<QueryOption> sqlGenerator;
+        private readonly ISqlGenerator<TabQueryOption> sqlGenerator;
         private readonly SqlConnection connection;
 
-        public TabRepository(string connectionString, ISqlGenerator<QueryOption> sqlGenerator)
+        public TabRepository(string connectionString, ISqlGenerator<TabQueryOption> sqlGenerator)
         {
             this.sqlGenerator = sqlGenerator;
             connection = new SqlConnection(connectionString);
         }
 
-        public Tab GetById(int id)
+        public Tab GetById(int id, TabQueryOption tabQueryOption)
         {
-            const string sql = "select * from Tab where Id = @id";
+            var sql = sqlGenerator.GenerateGet(tabQueryOption);
 
             connection.Open();
-            var tab = connection.Query<Tab>(sql, new { id });
+            var tab = connection.Query<Tab, Artist, Tab>(sql, (t, artist) => { t.Artist = artist; return t; }, new { id });
+            
             connection.Close();
 
             return tab.SingleOrDefault();
@@ -33,7 +34,7 @@ namespace Repositories
 
         public void Insert(Tab tab)
         {
-            const string sql = @"insert Tab (Author, ArtistId, Name, Content, CreatedOn, ModifiedOn) values (@Author, @ArtistId, @Name, @Content, @CreatedOn, @ModifiedOn) select cast(scope_identity() as int)";
+            var sql = sqlGenerator.GenerateInsert();
 
             connection.Open();
             tab.Id = connection.Query<int>(sql, new { tab.Author, ArtistId = tab.Artist.Id, tab.Name, tab.Content, CreatedOn = DateTime.UtcNow, ModifiedOn = DateTime.UtcNow }).First();
@@ -55,9 +56,9 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Tab> GetAll(QueryOption queryOption)
+        public IEnumerable<Tab> GetAll(TabQueryOption tabQueryOption)
         {
-            var sql = sqlGenerator.GenerateGetAll(queryOption);
+            var sql = sqlGenerator.GenerateGetAll(tabQueryOption);
 
             connection.Open();
             var tabs = connection.Query<Tab, Artist, Tab>(sql, (tab, artist) => { tab.Artist = artist; return tab; });

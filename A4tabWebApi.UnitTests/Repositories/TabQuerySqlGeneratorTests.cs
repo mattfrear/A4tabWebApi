@@ -9,25 +9,25 @@ using Should;
 namespace UnitTests.Repositories
 {
     [TestFixture]
-    public class SqlGeneratorTests
+    public class TabQuerySqlGeneratorTests
     {
-        private ISqlGenerator<QueryOption> sqlGenerator;
-        private Mock<IParameterValidator<QueryOption>> validator;
+        private ISqlGenerator<TabQueryOption> sqlGenerator;
+        private Mock<IParameterValidator<TabQueryOption>> validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new Mock<IParameterValidator<QueryOption>>();
+            validator = new Mock<IParameterValidator<TabQueryOption>>();
             sqlGenerator = new TabQuerySqlGenerator(validator.Object);
         }
 
-        public class GenerateSql : SqlGeneratorTests
+        public class GenerateGetAll : TabQuerySqlGeneratorTests
         {
             [Test]
             public void Should_Generate_Query_From_Default()
             {
                 // Arrange
-                var tabQuery = new QueryOption();
+                var tabQuery = new TabQueryOption();
 
                 // Act
                 var sql = sqlGenerator.GenerateGetAll(tabQuery);
@@ -40,7 +40,7 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Limit()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Limit = 20 };
+                var tabQuery = new TabQueryOption { Limit = 20 };
 
                 // Act
                 var sql = sqlGenerator.GenerateGetAll(tabQuery);
@@ -53,7 +53,7 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Offset()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Offset = 20 };
+                var tabQuery = new TabQueryOption { Offset = 20 };
 
                 // Act
                 var sql = sqlGenerator.GenerateGetAll(tabQuery);
@@ -66,7 +66,7 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Fields()
             {
                 // Arrange
-                var tabQuery = new QueryOption {Fields = "Tab.Id, Artist.Name" };
+                var tabQuery = new TabQueryOption {Fields = "Tab.Id, Artist.Name" };
 
                 // Act
                 var sql = sqlGenerator.GenerateGetAll(tabQuery);
@@ -79,7 +79,7 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_SortOrder()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Sort = "CreatedOn"};
+                var tabQuery = new TabQueryOption { Sort = "CreatedOn"};
 
                 // Act
                 var sql = sqlGenerator.GenerateGetAll(tabQuery);
@@ -92,13 +92,54 @@ namespace UnitTests.Repositories
             public void Should_Generate_Query_With_Desc_SortOrder()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Sort = "-CreatedOn" };
+                var tabQuery = new TabQueryOption { Sort = "-CreatedOn" };
 
                 // Act
                 var sql = sqlGenerator.GenerateGetAll(tabQuery);
 
                 // Assert
                 sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id ORDER by CreatedOn DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY");
+            }
+        }
+
+        public class GenerateGet : TabQuerySqlGeneratorTests
+        {
+            [Test]
+            public void Should_Generate_Query_From_Default()
+            {
+                // Arrange
+                var tabQuery = new TabQueryOption();
+
+                // Act
+                var sql = sqlGenerator.GenerateGet(tabQuery);
+
+                // Assert
+                sql.ShouldEqual("select * from Tab where Id = @id");
+            }
+
+            [Test]
+            public void Should_Generate_Query_With_Fields()
+            {
+                // Arrange
+                var tabQuery = new TabQueryOption { Fields = "Tab.Id, Tab.Name" };
+
+                // Act
+                var sql = sqlGenerator.GenerateGet(tabQuery);
+
+                // Assert
+                sql.ShouldEqual("select Tab.Id, Tab.Name from Tab where Id = @id");
+            }
+        }
+
+        public class GenerateInsert : TabQuerySqlGeneratorTests
+        {
+            public void Should_Generate_Insert()
+            {
+                // Act
+                var result = sqlGenerator.GenerateInsert();
+
+                // Assert
+                result.ShouldEqual(@"insert Tab (Author, ArtistId, Name, Content, CreatedOn, ModifiedOn) values (@Author, @ArtistId, @Name, @Content, @CreatedOn, @ModifiedOn) select cast(scope_identity() as int)");
             }
         }
     }

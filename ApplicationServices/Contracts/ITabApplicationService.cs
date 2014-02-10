@@ -7,8 +7,8 @@ namespace ApplicationServices.Contracts
     public interface ITabApplicationService
     {
         IEnumerable<TabViewModel> GetRecentTabs();
-        IEnumerable<TabViewModel> GetAll(QueryOption queryOption);
+        IEnumerable<TabViewModel> GetAll(TabQueryOption tabQueryOption);
         void Insert(Tab value);
-        TabViewModel Get(int tabId);
+        TabViewModel GetById(int tabId, TabQueryOption tabQueryOption);
     }
 }

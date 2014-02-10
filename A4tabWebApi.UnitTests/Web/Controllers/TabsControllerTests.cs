@@ -17,14 +17,14 @@ namespace A4tabWebApi.UnitTests.Controllers
     public class TabsControllerTests
     {
         private Mock<ITabApplicationService> tabApplicationService;
-        private Mock<IParameterValidator<QueryOption>> tabQueryValidator;
+        private Mock<IParameterValidator<TabQueryOption>> tabQueryValidator;
         private TabsController controller;
 
         [SetUp]
         public void Setup()
         {
             tabApplicationService = new Mock<ITabApplicationService>();
-            tabQueryValidator = new Mock<IParameterValidator<QueryOption>>();
+            tabQueryValidator = new Mock<IParameterValidator<TabQueryOption>>();
 
             controller = new TabsController(tabApplicationService.Object, tabQueryValidator.Object);
 
@@ -68,7 +68,7 @@ namespace A4tabWebApi.UnitTests.Controllers
                 // Arrange
                 tabQueryValidator.Setup(x => x.HasErrors()).Returns(false);
                 var tabs = new List<TabViewModel> { new TabViewModel { ArtistName = "Bob Marley" } };
-                var tabQuery = new QueryOption();
+                var tabQuery = new TabQueryOption();
                 tabApplicationService.Setup(x => x.GetAll(tabQuery)).Returns(tabs);
 
                 // Act

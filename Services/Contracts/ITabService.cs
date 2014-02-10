@@ -5,9 +5,9 @@ namespace Services.Contracts
 {
     public interface ITabService
     {
-        IEnumerable<Tab> GetAll(QueryOption queryOption);
+        IEnumerable<Tab> GetAll(TabQueryOption tabQueryOption);
         IEnumerable<Tab> GetRecentTabs();
         void Insert(Tab value);
-        Tab Get(int tabId);
+        Tab GetById(int tabId, TabQueryOption tabQueryOption);
     }
 }

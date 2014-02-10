@@ -22,7 +22,7 @@ namespace UnitTests.Validators
             public void Should_Return_No_Errors_For_Default()
             {
                 // Arrange
-                var tabQuery = new QueryOption();
+                var tabQuery = new TabQueryOption();
 
                 // Act
                 validator.Validate(tabQuery);
@@ -35,7 +35,7 @@ namespace UnitTests.Validators
             public void Should_Return_No_Errors_For_Sort()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Sort = "Tab.Id" };
+                var tabQuery = new TabQueryOption { Sort = "Tab.Id" };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -48,7 +48,7 @@ namespace UnitTests.Validators
             public void Should_Return_No_Errors_For_Fields()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Fields = "Tab.Id, Artist.Id, Artist.Name, Tab.Name" };
+                var tabQuery = new TabQueryOption { Fields = "Tab.Id, Artist.Id, Artist.Name, Tab.Name" };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -61,7 +61,7 @@ namespace UnitTests.Validators
             public void Should_Error_When_Offset_Less_Than_Zero()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Offset = -1 };
+                var tabQuery = new TabQueryOption { Offset = -1 };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -75,7 +75,7 @@ namespace UnitTests.Validators
             public void Should_Error_When_Limit_Less_Than_Zero()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Limit = -1 };
+                var tabQuery = new TabQueryOption { Limit = -1 };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -89,7 +89,7 @@ namespace UnitTests.Validators
             public void Should_Error_When_Limit_Greater_Than_100()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Limit = 101 };
+                var tabQuery = new TabQueryOption { Limit = 101 };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -103,7 +103,7 @@ namespace UnitTests.Validators
             public void Should_Error_When_Sort_Invalid()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Sort = "Blah" };
+                var tabQuery = new TabQueryOption { Sort = "Blah" };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -117,7 +117,7 @@ namespace UnitTests.Validators
             public void Should_Error_When_Fields_Invalid()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Fields = "Blah" };
+                var tabQuery = new TabQueryOption { Fields = "Blah" };
 
                 // Act
                 validator.Validate(tabQuery);
@@ -131,7 +131,7 @@ namespace UnitTests.Validators
             public void Should_Error_When_Fields_Missing_ArtistId()
             {
                 // Arrange
-                var tabQuery = new QueryOption { Fields = "Tab.Id, Tab.Name, Artist.Name" };
+                var tabQuery = new TabQueryOption { Fields = "Tab.Id, Tab.Name, Artist.Name" };
 
                 // Act
                 validator.Validate(tabQuery);

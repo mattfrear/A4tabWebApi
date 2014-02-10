@@ -16,9 +16,9 @@ namespace ApplicationServices
             this.tabService = tabService;
         }
         
-        public IEnumerable<TabViewModel> GetAll(QueryOption queryOption)
+        public IEnumerable<TabViewModel> GetAll(TabQueryOption tabQueryOption)
         {
-            var tabs = tabService.GetAll(queryOption);
+            var tabs = tabService.GetAll(tabQueryOption);
             return Mapper.Map<IEnumerable<TabViewModel>>(tabs);
         }
 
@@ -27,9 +27,9 @@ namespace ApplicationServices
             tabService.Insert(value);
         }
 
-        public TabViewModel Get(int tabId)
+        public TabViewModel GetById(int tabId, TabQueryOption tabQueryOption)
         {
-            var tab = tabService.Get(tabId);
+            var tab = tabService.GetById(tabId, tabQueryOption);
             return Mapper.Map<TabViewModel>(tab);
         }
 
