@@ -57,9 +57,6 @@ namespace A4tabWebApi.Controllers
         [Route("{id}")]
         public IHttpActionResult Get(int id, [FromUri]TabQueryOption tabQueryOption)
         {
-            // TODO implement angular Get page
-            // TODO implement importer
-
             if (tabQueryOption == null)
             {
                 tabQueryOption = new TabQueryOption();

@@ -29,23 +29,6 @@ namespace Services
             return tabRepository.GetAll(new TabQueryOption { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
         }
 
-        public void InsertOrUpdate(Tab tab)
-        {
-            if (tab.Id == 0)
-            {
-                Insert(tab);
-            }
-            else
-            {
-                Update(tab);
-            }
-        }
-
-        private void Update(Tab tab)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void Insert(Tab tab)
         {
             if (tab.Artist == null || (tab.Artist.Id == 0 && string.IsNullOrWhiteSpace(tab.Artist.Name)))
