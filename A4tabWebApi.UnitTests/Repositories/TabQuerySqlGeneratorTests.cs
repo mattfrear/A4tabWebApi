@@ -114,7 +114,7 @@ namespace UnitTests.Repositories
                 var sql = sqlGenerator.GenerateGet(tabQuery);
 
                 // Assert
-                sql.ShouldEqual("select * from Tab where Id = @id");
+                sql.ShouldEqual("SELECT * FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id where Tab.Id = @id");
             }
 
             [Test]
@@ -127,7 +127,7 @@ namespace UnitTests.Repositories
                 var sql = sqlGenerator.GenerateGet(tabQuery);
 
                 // Assert
-                sql.ShouldEqual("select Tab.Id, Tab.Name from Tab where Id = @id");
+                sql.ShouldEqual("SELECT Tab.Id, Tab.Name FROM Tab INNER JOIN Artist ON Tab.ArtistId = Artist.Id where Tab.Id = @id");
             }
         }
 
