@@ -1,12 +1,20 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using ApplicationServices.Contracts;
+using Domain;
 
 namespace Importer
 {
-    public class ImportService
+    public class ImportService : IImportService
     {
+        private readonly ITabApplicationService tabApplicationService;
+
+        public ImportService(ITabApplicationService tabApplicationService)
+        {
+            this.tabApplicationService = tabApplicationService;
+        }
+
         public void Import()
         {
             Console.WriteLine("Starting import");
@@ -44,8 +52,40 @@ namespace Importer
 //                session.SaveChanges();
 //            }
 //
+
+            ImportFolder(importFolder);
+
             Console.WriteLine("Finished import, press ENTER to quit");
             Console.ReadLine();
+        }
+
+        private void ImportFolder(string folderName, string bookName = "")
+        {
+            foreach (var filePath in Directory.GetFiles(folderName))
+            {
+                ImportFile(filePath);
+                //File.Delete(filePath);
+            }
+        }
+
+        private void ImportFile(string filePath)
+        {
+            var filename = Path.GetFileNameWithoutExtension(filePath);
+            Console.WriteLine("Importing " + filename);
+
+            var parts = filename.Split(new[] { " - " }, StringSplitOptions.None);
+            if (parts.Length < 2)
+            {
+                return;
+            }
+
+            var artistName = parts.First().Trim();
+            var name = parts.Last().Trim();
+
+            var content = File.ReadAllText(filePath);
+
+            var tab = new Tab { Artist = new Artist { Name = artistName }, Name = name, Content = content, Author = "matt.frear@gmail.com" };
+            tabApplicationService.Insert(tab);
         }
 
 //        private static void ImportFolder(string folderName, IDocumentSession session, string bookName = "")
