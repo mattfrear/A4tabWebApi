@@ -1,21 +1,42 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="en" ng-app="a4tab">
 <head>
     <meta charset="utf-8">
-    <title>My HTML File</title>
+    <title ng-bind="title + ' - A4tab.net'"></title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/lib/angular/angular.js"></script>
     <script src="/lib/angular/angular-route.js"></script>
     <script src="/app/app.js"></script>
 </head>
-    <body ng-app="a4tab">
-
+<body role="document">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <div ng-view></div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">A4 tab</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/tabs">All tabs</a></li>
+                    <li><a href="#/books">Songbooks</a></li>
+                    <li><a href="#/upload">Upload</a></li>
+                    <li><a href="#/search">Search</a></li>
+                    <li><a href="#/login">Log in / Register</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
+    </div>
+    <div class="container" role="main">
+        <div ng-view></div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="/js/bootstrap.min.js"></script>
-    </body>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+</body>
 </html>
