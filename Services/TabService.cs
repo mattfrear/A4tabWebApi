@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Domain;
-using Repositories;
 using Repositories.Contracts;
 using Services.Contracts;
 
@@ -26,7 +25,7 @@ namespace Services
 
         public IEnumerable<Tab> GetRecentTabs()
         {
-            return tabRepository.GetAll(new TabQueryOption { Fields = "Tab.Id, Artist.Name, Tab.Name, Artist.Id", Sort = "-Tab.CreatedOn" });
+            return tabRepository.GetAll(new TabQueryOption { Fields = "Tab.Id, Tab.Name, Artist.Id, Artist.Name", Sort = "-Tab.CreatedOn", Limit = 10 });
         }
 
         public void Insert(Tab tab)
