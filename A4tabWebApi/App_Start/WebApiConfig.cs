@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace A4tabWebApi
 {
@@ -10,7 +11,8 @@ namespace A4tabWebApi
             // Web API configuration and services
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
 
             // Web API routes

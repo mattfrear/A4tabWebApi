@@ -23,6 +23,11 @@ namespace Services
             return tabRepository.GetAll(tabQueryOption);
         }
 
+        public int GetCount()
+        {
+            return tabRepository.GetCount();
+        }
+
         public IEnumerable<Tab> GetRecentTabs()
         {
             return tabRepository.GetAll(new TabQueryOption { Fields = "Tab.Id, Tab.Name, Artist.Id, Artist.Name", Sort = "-Tab.CreatedOn", Limit = 10 });

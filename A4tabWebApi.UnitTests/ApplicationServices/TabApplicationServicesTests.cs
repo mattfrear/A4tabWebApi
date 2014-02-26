@@ -36,12 +36,14 @@ namespace UnitTests.ApplicationServices
                 var tabQuery = new TabQueryOption();
                 var tabs = new List<Tab> { new Tab { Artist = new Artist { Name = "Bob Marley" }, Name = "Easy Skankin'" } };
                 tabService.Setup(x => x.GetAll(tabQuery)).Returns(tabs);
+                tabService.Setup(x => x.GetCount()).Returns(99);
 
                 // Act
                 var result = applicationService.GetAll(tabQuery);
 
                 // Assert
-                var tabViewModels = result.ToList();
+                result.TotalCount.ShouldEqual(99);
+                var tabViewModels = result.Tabs.ToList();
                 tabViewModels.First().ArtistName.ShouldEqual("Bob Marley");
                 tabViewModels.First().Name.ShouldEqual("Easy Skankin'");
             }

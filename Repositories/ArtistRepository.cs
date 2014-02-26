@@ -56,5 +56,10 @@ namespace Repositories
         {
             throw new NotImplementedException();
         }
+
+        public int GetCount()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

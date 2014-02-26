@@ -40,6 +40,23 @@ namespace UnitTests.Services
             }
         }
 
+        public class GetCount : TabServiceTests
+        {
+            [Test]
+            public void Should_Call_Repository()
+            {
+                // Arrange
+                tabRepository.Setup(x => x.GetCount()).Returns(7);
+
+                // Act
+                var count = service.GetCount();
+
+                // Assert
+                count.ShouldEqual(7);
+                tabRepository.VerifyAll();
+            }
+        }
+
         public class GetRecentTabs : TabServiceTests
         {
             [Test]

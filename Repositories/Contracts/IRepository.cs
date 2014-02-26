@@ -11,5 +11,6 @@ namespace Repositories.Contracts
         void Update(T entity); 
         IEnumerable<T> SearchFor(string name);
         IEnumerable<T> GetAll(TabQueryOption tabQueryOption);
+        int GetCount();
     }
 }

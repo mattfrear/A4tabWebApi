@@ -66,5 +66,12 @@ namespace Repositories
 
             return tabs;
         }
+
+        public int GetCount()
+        {
+            const string sql = "select count(*) from Tab";
+            int count = connection.Query<int>(sql).Single();
+            return count;
+        }
     }
 }

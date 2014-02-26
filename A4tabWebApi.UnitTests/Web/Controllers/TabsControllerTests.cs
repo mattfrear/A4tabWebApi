@@ -68,8 +68,9 @@ namespace A4tabWebApi.UnitTests.Controllers
                 // Arrange
                 tabQueryValidator.Setup(x => x.HasErrors()).Returns(false);
                 var tabs = new List<TabViewModel> { new TabViewModel { ArtistName = "Bob Marley" } };
+                var tabViewModel = new TabsResponseViewModel { Tabs = tabs };
                 var tabQuery = new TabQueryOption();
-                tabApplicationService.Setup(x => x.GetAll(tabQuery)).Returns(tabs);
+                tabApplicationService.Setup(x => x.GetAll(tabQuery)).Returns(tabViewModel);
 
                 // Act
                 var result = controller.Get(tabQuery);
@@ -77,9 +78,8 @@ namespace A4tabWebApi.UnitTests.Controllers
                 // Assert
                 tabApplicationService.VerifyAll();
 
-                result.ShouldBeType<OkNegotiatedContentResult<IEnumerable<TabViewModel>>>();
-                var tabResult = ((OkNegotiatedContentResult<IEnumerable<TabViewModel>>) result).Content;
-                tabResult.First().ArtistName.ShouldEqual("Bob Marley");
+                var tabResult = result.ShouldBeType<OkNegotiatedContentResult<TabsResponseViewModel>>();
+                tabResult.Content.Tabs.First().ArtistName.ShouldEqual("Bob Marley");
             }
         }
 

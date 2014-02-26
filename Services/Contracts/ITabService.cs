@@ -9,5 +9,6 @@ namespace Services.Contracts
         IEnumerable<Tab> GetRecentTabs();
         void Insert(Tab value);
         Tab GetById(int tabId, TabQueryOption tabQueryOption);
+        int GetCount();
     }
 }

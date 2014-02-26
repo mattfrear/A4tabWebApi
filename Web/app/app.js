@@ -34,7 +34,7 @@ app.controller("recentCtrl", function ($scope, $http) {
 
 app.controller("tabsCtrl", function($scope, $http) {
     $http.get("http://localhost:1120/api/v1/tabs/").success(function (data) {
-        $scope.tabs = data;
+        $scope.tabs = data.tabs;
     }).error(function () {
         $scope.error = "Couldn't load tabs.";
     });
