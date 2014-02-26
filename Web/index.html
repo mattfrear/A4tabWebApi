@@ -9,7 +9,7 @@
     <script src="/app/app.js"></script>
 </head>
 <body role="document">
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -25,9 +25,14 @@
                     <li><a href="#/tabs">All tabs</a></li>
                     <li><a href="#/books">Songbooks</a></li>
                     <li><a href="#/upload">Upload</a></li>
-                    <li><a href="#/search">Search</a></li>
                     <li><a href="#/login">Log in / Register</a></li>
                 </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
             </div><!--/.nav-collapse -->
         </div>
     </div>
