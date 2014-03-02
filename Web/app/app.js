@@ -1,5 +1,12 @@
 ﻿var app = angular.module("a4tab", ['ngRoute']);
 
+app.urls = {
+    base: "http://localhost:1120/api/"
+};
+
+app.urls.recent = app.urls.base + "v1/tabs/recent";
+app.urls.tabs = app.urls.base + "v1/tabs/";
+
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {
@@ -25,7 +32,7 @@ app.run(['$location', '$rootScope', function ($location, $rootScope) {
 }]);
 
 app.controller("recentCtrl", function ($scope, $http) {
-    $http.get("http://localhost:1120/api/v1/tabs/recent").success(function(data) {
+    $http.get(app.urls.recent).success(function(data) {
         $scope.recentTabs = data;
     }).error(function() {
         $scope.error = "Couldn't load Recent tabs.";
@@ -33,8 +40,21 @@ app.controller("recentCtrl", function ($scope, $http) {
 });
 
 app.controller("tabsCtrl", function($scope, $http) {
-    $http.get("http://localhost:1120/api/v1/tabs/").success(function (data) {
+
+    var limit = 10;
+
+    var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
+    $http.get(querystring + "0").success(function (data) {
+
         $scope.tabs = data.tabs;
+
+        for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
+            $http.get(querystring + retrieved).success(function (data) {
+                $scope.tabs = $scope.tabs.concat(data.tabs);
+            }).error(function () {
+                $scope.error = "Couldn't load tabs.";
+            });
+        }
     }).error(function () {
         $scope.error = "Couldn't load tabs.";
     });
@@ -42,7 +62,7 @@ app.controller("tabsCtrl", function($scope, $http) {
 
 app.controller("tabCtrl", function($scope, $http, $routeParams, $rootScope) {
     
-    $http.get("http://localhost:1120/api/v1/tabs/" + $routeParams.id).success(function (data) {
+    $http.get(app.urls.tabs + $routeParams.id).success(function (data) {
         $scope.tab = data;
         $rootScope.title = data.Name;
     }).error(function () {
