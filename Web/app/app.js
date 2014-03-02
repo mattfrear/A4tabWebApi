@@ -40,12 +40,10 @@ app.controller("recentCtrl", function ($scope, $http) {
 });
 
 app.controller("tabsCtrl", function($scope, $http) {
-
-    var limit = 10;
-
+    var limit = 100;
     var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
-    $http.get(querystring + "0").success(function (data) {
 
+    $http.get(querystring + "0").success(function (data) {
         $scope.tabs = data.tabs;
 
         for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
@@ -55,6 +53,7 @@ app.controller("tabsCtrl", function($scope, $http) {
                 $scope.error = "Couldn't load tabs.";
             });
         }
+
     }).error(function () {
         $scope.error = "Couldn't load tabs.";
     });
