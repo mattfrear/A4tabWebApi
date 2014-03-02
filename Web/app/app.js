@@ -47,8 +47,9 @@ app.controller("tabsCtrl", function($scope, $http) {
         $scope.tabs = data.tabs;
 
         for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
-            $http.get(querystring + retrieved).success(function (data) {
-                $scope.tabs = $scope.tabs.concat(data.tabs);
+            $http.get(querystring + retrieved).success(function (result) {
+                $scope.tabs = $scope.tabs.concat(result.tabs);
+                addFirstLetters($scope.tabs);
             }).error(function () {
                 $scope.error = "Couldn't load tabs.";
             });
@@ -57,6 +58,18 @@ app.controller("tabsCtrl", function($scope, $http) {
     }).error(function () {
         $scope.error = "Couldn't load tabs.";
     });
+
+    var addFirstLetters = function(tabs) {
+        var previousFirstLetter = '';
+        for (var i in tabs) {
+            var tab = tabs[i];
+            var firstLetter = tab.artistName.substr(0, 1);
+            if (firstLetter !== previousFirstLetter) {
+                tab.firstLetter = firstLetter;
+                previousFirstLetter = firstLetter;
+            }
+        }
+    };
 });
 
 app.controller("tabCtrl", function($scope, $http, $routeParams, $rootScope) {
