@@ -7,7 +7,7 @@ app.urls = {
 app.urls.recent = app.urls.base + "v1/tabs/recent";
 app.urls.tabs = app.urls.base + "v1/tabs/";
 
-app.config(function($routeProvider) {
+ app.config(function($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'pages/home.html',
@@ -39,10 +39,15 @@ app.controller("recentCtrl", function ($scope, $http) {
     });
 });
 
-app.controller("tabsCtrl", function($scope, $http) {
-    var limit = 100;
-    var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
+app.controller("tabsCtrl", function($scope, $http, tabsService) {
 
+    tabsService
+        .getTabs()
+        .then(function(data) {
+            $scope.error = data.error;
+            $scope.tabs = data.tabs;
+    });
+    /*
     $http.get(querystring + "0").success(function (data) {
         $scope.tabs = data.tabs;
 
@@ -58,16 +63,59 @@ app.controller("tabsCtrl", function($scope, $http) {
     }).error(function () {
         $scope.error = "Couldn't load tabs.";
     });
-
+    */
     var addFirstLetters = function(tabs) {
         var previousFirstLetter = '';
-        for (var i in tabs) {
+        for (var i = 0; i < tabs.length;  i++) {
             var tab = tabs[i];
             var firstLetter = tab.artistName.substr(0, 1);
             if (firstLetter !== previousFirstLetter) {
                 tab.firstLetter = firstLetter;
                 previousFirstLetter = firstLetter;
             }
+        }
+    };
+});
+
+app.service("tabsService", function ($q, $http) {
+
+    return {
+        getTabs: function () {
+            var dfd = $q.defer();
+
+            var limit = 10;
+            var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
+
+    //            $http.get(querystring + "0").success(function (data) {
+    //                dfd.resolve(data);
+    //            });
+
+            var response = { error: '', tabs: []};
+            var tabs = [];
+            $http.get(querystring + "0").success(function (data) {
+                tabs = data.tabs;
+
+                for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
+                    $http.get(querystring + retrieved).success(function (result) {
+                       tabs = tabs.concat(result.tabs);
+                        // addFirstLetters($scope.tabs);
+
+                       if (tabs.length === data.totalCount) {
+                           response.tabs = tabs;
+                           dfd.resolve(response);
+                       }
+
+                    }).error(function () {
+                        response.error = "Couldn't load tabs.";
+                        dfd.resolve(response);
+                    });
+                }
+            }).error(function () {
+                response.error = "Couldn't load tabs.";
+                dfd.resolve(response);
+            });
+
+            return dfd.promise;
         }
     };
 });
