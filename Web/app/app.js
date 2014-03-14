@@ -43,79 +43,78 @@ app.controller("tabsCtrl", function($scope, $http, tabsService) {
 
     tabsService
         .getTabs()
-        .then(function(data) {
+        .then(function (data) {
             $scope.error = data.error;
+
+            if (!data.tabs) {
+                return;
+            }
+
+            var tabs = data.tabs;
+            tabsService.sortTabs(tabs);
+            tabsService.addFirstLetters(tabs);
             $scope.tabs = data.tabs;
     });
-    /*
-    $http.get(querystring + "0").success(function (data) {
-        $scope.tabs = data.tabs;
-
-        for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
-            $http.get(querystring + retrieved).success(function (result) {
-                $scope.tabs = $scope.tabs.concat(result.tabs);
-                addFirstLetters($scope.tabs);
-            }).error(function () {
-                $scope.error = "Couldn't load tabs.";
-            });
-        }
-
-    }).error(function () {
-        $scope.error = "Couldn't load tabs.";
-    });
-    */
-    var addFirstLetters = function(tabs) {
-        var previousFirstLetter = '';
-        for (var i = 0; i < tabs.length;  i++) {
-            var tab = tabs[i];
-            var firstLetter = tab.artistName.substr(0, 1);
-            if (firstLetter !== previousFirstLetter) {
-                tab.firstLetter = firstLetter;
-                previousFirstLetter = firstLetter;
-            }
-        }
-    };
+    
 });
 
 app.service("tabsService", function ($q, $http) {
 
     return {
-        getTabs: function () {
+        getTabs: function() {
             var dfd = $q.defer();
 
             var limit = 10;
             var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
 
-    //            $http.get(querystring + "0").success(function (data) {
-    //                dfd.resolve(data);
-    //            });
-
-            var response = { error: '', tabs: []};
+            var response = { error: '', tabs: [] };
             var tabs = [];
-            $http.get(querystring + "0").success(function (data) {
+            $http.get(querystring + "0").success(function(data) {
                 tabs = data.tabs;
 
                 for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
-                    $http.get(querystring + retrieved).success(function (result) {
-                       tabs = tabs.concat(result.tabs);
+                    $http.get(querystring + retrieved).success(function(result) {
+                        tabs = tabs.concat(result.tabs);
                         // addFirstLetters($scope.tabs);
 
-                       if (tabs.length === data.totalCount) {
-                           response.tabs = tabs;
-                           dfd.resolve(response);
-                       }
+                        if (tabs.length === data.totalCount) {
+                            response.tabs = tabs;
+                            dfd.resolve(response);
+                        }
 
-                    }).error(function () {
+                    }).error(function() {
                         response.error = "Couldn't load tabs.";
                         dfd.resolve(response);
                     });
                 }
-            }).error(function () {
+            }).error(function() {
                 response.error = "Couldn't load tabs.";
                 dfd.resolve(response);
             });
 
             return dfd.promise;
+        },
+        sortTabs: function(tabs) {
+
+            var compare = function(a, b) {
+                if (a.artistName === b.artistName) {
+                    return a.name.localeCompare(b.name);
+                }
+                return a.artistName.localeCompare(b.artistName);
+            };
+
+            tabs.sort(compare);
+        },
+        addFirstLetters: function(tabs) {
+            var previousFirstLetter = '';
+            for (var i = 0; i < tabs.length; i++) {
+                var tab = tabs[i];
+                var firstLetter = tab.artistName.substr(0, 1);
+                if (firstLetter !== previousFirstLetter) {
+                    tab.firstLetter = firstLetter;
+                    previousFirstLetter = firstLetter;
+                }
+            }
         }
     };
 });

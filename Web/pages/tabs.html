@@ -8,7 +8,7 @@
         {{error}}
     </div>
     <ul class="list-unstyled">
-        <li ng-repeat="tab in tabs | orderBy:'artistName'">
+        <li ng-repeat="tab in tabs">
             <h4 ng-show="tab.firstLetter">{{tab.firstLetter}}</h4>
             <a href="#/tabs/{{tab.id}}">{{tab.artistName}} - {{tab.name}}</a>
         </li>
