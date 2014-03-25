@@ -52,10 +52,9 @@ app.controller("tabsCtrl", function($scope, $http, tabsService) {
 
             var tabs = data.tabs;
             tabsService.sortTabs(tabs);
-            tabsService.addFirstLetters(tabs);
+            tabsService.addFirstLetters(tabs, 'artistName');
             $scope.tabs = data.tabs;
-    });
-    
+    }); 
 });
 
 app.service("tabsService", function ($q, $http) {
@@ -64,7 +63,7 @@ app.service("tabsService", function ($q, $http) {
         getTabs: function() {
             var dfd = $q.defer();
 
-            var limit = 10;
+            var limit = 100;
             var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
 
             var response = { error: '', tabs: [] };
@@ -75,7 +74,6 @@ app.service("tabsService", function ($q, $http) {
                 for (var retrieved = data.tabs.length; retrieved < data.totalCount; retrieved += limit) {
                     $http.get(querystring + retrieved).success(function(result) {
                         tabs = tabs.concat(result.tabs);
-                        // addFirstLetters($scope.tabs);
 
                         if (tabs.length === data.totalCount) {
                             response.tabs = tabs;
@@ -105,11 +103,11 @@ app.service("tabsService", function ($q, $http) {
 
             tabs.sort(compare);
         },
-        addFirstLetters: function(tabs) {
+        addFirstLetters: function(tabs, propertyName) {
             var previousFirstLetter = '';
             for (var i = 0; i < tabs.length; i++) {
                 var tab = tabs[i];
-                var firstLetter = tab.artistName.substr(0, 1);
+                var firstLetter = tab[propertyName].substr(0, 1);
                 if (firstLetter !== previousFirstLetter) {
                     tab.firstLetter = firstLetter;
                     previousFirstLetter = firstLetter;
