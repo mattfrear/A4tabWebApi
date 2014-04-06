@@ -39,7 +39,7 @@ app.controller("recentCtrl", function ($scope, $http) {
     });
 });
 
-app.controller("tabsCtrl", function($scope, $http, tabsService) {
+app.controller("tabsCtrl", function ($scope, $http, tabsService, sortService, firstLetterService) {
 
     tabsService
         .getTabs()
@@ -51,10 +51,42 @@ app.controller("tabsCtrl", function($scope, $http, tabsService) {
             }
 
             var tabs = data.tabs;
-            tabsService.sortTabs(tabs);
-            tabsService.addFirstLetters(tabs, 'artistName');
-            $scope.tabs = data.tabs;
+            sortService.sortTabs(tabs);
+            firstLetterService.addFirstLetters(tabs, 'artistName');
+            $scope.tabs = tabs;
     }); 
+});
+
+app.service("sortService", function() {
+    return {
+        sortTabs: function(tabs) {
+
+            var compare = function(a, b) {
+                if (a.artistName === b.artistName) {
+                    return a.name.localeCompare(b.name);
+                }
+                return a.artistName.localeCompare(b.artistName);
+            };
+
+            tabs.sort(compare);
+        },
+    };
+});
+
+app.service("firstLetterService", function() {
+    return {
+        addFirstLetters: function(tabs, propertyName) {
+            var previousFirstLetter = '';
+            for (var i = 0; i < tabs.length; i++) {
+                var tab = tabs[i];
+                var firstLetter = tab[propertyName].substr(0, 1);
+                if (firstLetter !== previousFirstLetter) {
+                    tab.firstLetter = firstLetter;
+                    previousFirstLetter = firstLetter;
+                }
+            }
+        }
+    };
 });
 
 app.service("tabsService", function ($q, $http) {
@@ -92,28 +124,6 @@ app.service("tabsService", function ($q, $http) {
 
             return dfd.promise;
         },
-        sortTabs: function(tabs) {
-
-            var compare = function(a, b) {
-                if (a.artistName === b.artistName) {
-                    return a.name.localeCompare(b.name);
-                }
-                return a.artistName.localeCompare(b.artistName);
-            };
-
-            tabs.sort(compare);
-        },
-        addFirstLetters: function(tabs, propertyName) {
-            var previousFirstLetter = '';
-            for (var i = 0; i < tabs.length; i++) {
-                var tab = tabs[i];
-                var firstLetter = tab[propertyName].substr(0, 1);
-                if (firstLetter !== previousFirstLetter) {
-                    tab.firstLetter = firstLetter;
-                    previousFirstLetter = firstLetter;
-                }
-            }
-        }
     };
 });
 
