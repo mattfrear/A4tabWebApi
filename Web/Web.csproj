@@ -102,7 +102,8 @@
     <Content Include="lib\angular\angular.js" />
     <Content Include="lib\angular\angular.min.js" />
     <Content Include="SpecRunner.html" />
-    <Content Include="spec\SortServiceSpec.js" />
+    <Content Include="spec\firstLetterServiceSpec.js" />
+    <Content Include="spec\sortServiceSpec.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
