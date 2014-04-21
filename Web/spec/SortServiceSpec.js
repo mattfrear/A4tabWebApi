@@ -14,9 +14,16 @@ describe('sortService tests', function () {
         expect(angular.isFunction(sortService.sortTabs)).toBe(true);
     });
 
-    it('should sort tabs ', function () {
-        var tabs = [{ artistName: "Bob" }, { artistName: "Blah" }];
+    it('should sort tabs by artistName', function () {
+        var tabs = [{ artistName: "Bob" }, { artistName: "Blah" }, { artistName: 'Alice' }];
         sortService.sortTabs(tabs);
-        expect(tabs).toEqual([{ artistName: "Blah" }, { artistName: "Bob" }]);
+        expect(tabs).toEqual([{ artistName: 'Alice' }, { artistName: "Blah" }, { artistName: "Bob" }]);
     });
+
+    it('should sort tabs by artistName then name', function () {
+        var tabs = [{ artistName: "Bob" }, { artistName: "Blah", name: "Moo" }, { artistName: 'Blah', name: "Meow" }];
+        sortService.sortTabs(tabs);
+        expect(tabs).toEqual([{ artistName: 'Blah', name: "Meow" }, { artistName: "Blah", name: "Moo" }, { artistName: "Bob" }]);
+    });
+
 });

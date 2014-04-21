@@ -60,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\controllers\recentController.js" />
+    <Content Include="app\controllers\tabController.js" />
+    <Content Include="app\controllers\tabsController.js" />
+    <Content Include="app\services\firstLetterService.js" />
+    <Content Include="app\services\sortService.js" />
+    <Content Include="app\services\tabService.js" />
     <Content Include="css\a4tab.css" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -97,8 +103,6 @@
     <Content Include="lib\angular\angular.min.js" />
     <Content Include="SpecRunner.html" />
     <Content Include="spec\SortServiceSpec.js" />
-    <Content Include="src\Player.js" />
-    <Content Include="src\Song.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
