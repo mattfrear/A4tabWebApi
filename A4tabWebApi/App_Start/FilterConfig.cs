@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Elmah.Contrib.WebApi;
 
@@ -9,7 +10,7 @@ namespace A4tabWebApi
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new ElmahHandleErrorApiAttribute());
+            GlobalConfiguration.Configuration.Filters.Add(new ElmahHandleErrorApiAttribute());
         }
     }
 }
