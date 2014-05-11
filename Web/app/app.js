@@ -1,11 +1,12 @@
 ﻿var app = angular.module("a4tab", ['ngRoute']);
 
-app.urls = {
-    base: "http://localhost:1120/api/"
+app.apiUrls = {
+    // base: "http://localhost:1120/api/"
+    base: "http://a4tabapi.azurewebsites.net/api/"
 };
 
-app.urls.recent = app.urls.base + "v1/tabs/recent";
-app.urls.tabs = app.urls.base + "v1/tabs/";
+app.apiUrls.recent = app.apiUrls.base + "v1/tabs/recent";
+app.apiUrls.tabs = app.apiUrls.base + "v1/tabs/";
 
  app.config(function($routeProvider) {
     $routeProvider

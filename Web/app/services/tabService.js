@@ -5,7 +5,7 @@
             var dfd = $q.defer();
 
             var limit = 100;
-            var querystring = app.urls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
+            var querystring = app.apiUrls.tabs + "?fields=Tab.Id,Tab.Name,Artist.Id,Artist.Name&limit=" + limit + "&sort=Artist.Name&offset=";
 
             var response = { error: '', tabs: [] };
             var tabs = [];
