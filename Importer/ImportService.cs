@@ -84,7 +84,7 @@ namespace Importer
 
             var content = File.ReadAllText(filePath);
 
-            var tab = new Tab { Artist = new Artist { Name = artistName }, Name = name, Content = content, Author = "matt.frear@gmail.com" };
+            var tab = new Tab { Artist = new Artist { Name = artistName }, Name = name, Content = content, Author = "matt@a4tab.net" };
             tabApplicationService.Insert(tab);
         }
 
