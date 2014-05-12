@@ -1,0 +1,10 @@
+- add authorization to web api
+- add upload to website
+- change page title in a view
+- add search to website
+- add authentication to api
+- add authentication to website
+
+Maybe
+- add artists to api
+- add artists to website

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A4tabWebApi", "A4tabWebApi\A4tabWebApi.csproj", "{CBC27FE8-ECCB-49FE-93DA-515C67CFFFB2}"
 EndProject
@@ -37,6 +37,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators", "Validators\Validators.csproj", "{F4241F20-3333-471E-B4B8-8B7EC9B31ADA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer", "Importer\Importer.csproj", "{A5900126-2D02-420D-8010-C6A6B3E5A51C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5CC99346-6B80-4FE9-88BC-7967A1E63A9D}"
+	ProjectSection(SolutionItems) = preProject
+		spec.txt = spec.txt
+		todo.txt = todo.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
